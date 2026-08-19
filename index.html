@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Micah Gentry - Developer, Sysadmin, and Builder. Portfolio, projects, and homelab showcase." />
+  <title>Micah Gentry | Developer & Sysadmin</title>
+  
+  <!-- Preconnect Google Fonts for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & THEME SYSTEM
+       ========================================================================== */
+    :root {
+      --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", Consolas, Monaco, monospace;
+
+      /* Base Dark Palette */
+      --bg-base: #080b12;
+      --bg-surface: #0e1320;
+      --bg-surface-elevated: #151c2e;
+      --bg-card: rgba(18, 25, 42, 0.72);
+      --bg-card-hover: rgba(26, 36, 60, 0.85);
+      --bg-glass: rgba(14, 20, 35, 0.65);
+
+      /* Borders & Dividers */
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-medium: rgba(255, 255, 255, 0.14);
+      --border-accent: rgba(var(--accent-rgb), 0.35);
+
+      /* Typography */
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --text-bright: #ffffff;
+
+      /* Default Accent: Cyan / Electric Blue */
+      --accent-rgb: 56, 189, 248;
+      --accent: rgb(var(--accent-rgb));
+      --accent-glow: rgba(var(--accent-rgb), 0.18);
+      --accent-glow-strong: rgba(var(--accent-rgb), 0.35);
+      --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+
+      /* Status Colors */
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+
+      /* Layout */
+      --max-width: 1040px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 12px 36px -6px rgba(0, 0, 0, 0.5), 0 0 20px -2px var(--accent-glow);
+    }
+
+    /* Accent Color Variants (Toggleable via Accent Picker) */
+    [data-theme="emerald"] {
+      --accent-rgb: 16, 185, 129;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.2);
+      --accent-glow-strong: rgba(16, 185, 129, 0.4);
+      --accent-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    }
+
+    [data-theme="violet"] {
+      --accent-rgb: 168, 85, 247;
+      --accent: #a855f7;
+      --accent-glow: rgba(168, 85, 247, 0.22);
+      --accent-glow-strong: rgba(168, 85, 247, 0.45);
+      --accent-gradient: linear-gradient(135deg, #c084fc 0%, #ec4899 100%);
+    }
+
+    [data-theme="amber"] {
+      --accent-rgb: 245, 158, 11;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.2);
+      --accent-glow-strong: rgba(245, 158, 11, 0.4);
+      --accent-gradient: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+    }
+
+    [data-theme="rose"] {
+      --accent-rgb: 244, 63, 94;
+      --accent: #f43f5e;
+      --accent-glow: rgba(244, 63, 94, 0.2);
+      --accent-glow-strong: rgba(244, 63, 94, 0.4);
+      --accent-gradient: linear-gradient(135deg, #fb7185 0%, #a855f7 100%);
+    }
+
+    /* ==========================================================================
+       GLOBAL RESETS & BACKGROUND
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      font-size: 1rem;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Subtle Futuristic Background Grid & Ambient Glows */
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 85%);
+      -webkit-mask-image: radial-gradient(circle at 50% 30%, black 40%, transparent 85%);
+    }
+
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.22;
+      pointer-events: none;
+      transition: all 0.6s ease;
+    }
+
+    .orb-1 {
+      width: 480px;
+      height: 480px;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+    }
+
+    .orb-2 {
+      width: 380px;
+      height: 380px;
+      top: 60%;
+      right: -100px;
+      background: #6366f1;
+      opacity: 0.15;
+    }
+
+    .orb-3 {
+      width: 320px;
+      height: 320px;
+      bottom: 5%;
+      left: -80px;
+      background: var(--accent);
+      opacity: 0.12;
+    }
+
+    /* ==========================================================================
+       CONTAINER & TYPOGRAPHY
+       ========================================================================== */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-display);
+      color: var(--text-bright);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-text {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: var(--accent);
+    }
+
+    p {
+      color: var(--text-muted);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--text-bright);
+    }
+
+    code, .mono {
+      font-family: var(--font-mono);
+    }
+
+    /* ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== */
+    .navbar {
+      position: sticky;
+      top: 1rem;
+      z-index: 50;
+      margin-bottom: 2.5rem;
+      padding: 0.65rem 1.25rem;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-bright);
+    }
+
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent-glow);
+      border: 1px solid var(--border-accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 0.35rem 0.6rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-bright);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Status Pill */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      padding: 0.25rem 0.65rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius-full);
+      color: #34d399;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse-glow 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Accent Switcher Dropdown */
+    .theme-picker {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.4rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+    }
+
+    .theme-btn {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .theme-btn:hover, .theme-btn.active {
+      transform: scale(1.3);
+      box-shadow: 0 0 6px currentColor;
+    }
+
+    .theme-btn[data-theme-set="default"] { background-color: #38bdf8; color: #38bdf8; }
+    .theme-btn[data-theme-set="emerald"] { background-color: #10b981; color: #10b981; }
+    .theme-btn[data-theme-set="violet"] { background-color: #a855f7; color: #a855f7; }
+    .theme-btn[data-theme-set="amber"] { background-color: #f59e0b; color: #f59e0b; }
+    .theme-btn[data-theme-set="rose"] { background-color: #f43f5e; color: #f43f5e; }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      padding: 2.5rem 0 3.5rem;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-glow);
+      border: 1px solid var(--border-accent);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      width: fit-content;
+    }
+
+    .hero-title {
+      font-size: clamp(2.3rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.12rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 520px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #050810;
+      box-shadow: 0 4px 16px var(--accent-glow-strong);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--accent-glow-strong);
+      color: #000;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border-color: var(--border-medium);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--accent);
+      color: var(--text-bright);
+      transform: translateY(-2px);
+    }
+
+    .btn-icon {
+      padding: 0.65rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-icon:hover {
+      color: var(--accent);
+      border-color: var(--border-accent);
+      background: var(--accent-glow);
+    }
+
+    /* ==========================================================================
+       INTERACTIVE TERMINAL / SYSTEM PREVIEW WIDGET
+       ========================================================================== */
+    .terminal-card {
+      background: #090d16;
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      position: relative;
+    }
+
+    .terminal-header {
+      background: #111726;
+      padding: 0.6rem 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .terminal-title {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .terminal-tabs {
+      display: flex;
+      background: #0d121f;
+      border-bottom: 1px solid var(--border-subtle);
+      overflow-x: auto;
+    }
+
+    .term-tab {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .term-tab:hover {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-bright);
+    }
+
+    .term-tab.active {
+      background: #090d16;
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      font-weight: 600;
+    }
+
+    .terminal-body {
+      padding: 1.1rem;
+      min-height: 230px;
+      line-height: 1.6;
+      color: var(--text-main);
+      background: rgba(9, 13, 22, 0.95);
+    }
+
+    .term-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .term-key {
+      color: var(--accent);
+      font-weight: 600;
+      min-width: 90px;
+    }
+
+    .term-val {
+      color: var(--text-muted);
+    }
+
+    .term-prompt {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #34d399;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--border-subtle);
+    }
+
+    .term-cursor {
+      display: inline-block;
+      width: 7px;
+      height: 14px;
+      background: var(--accent);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ==========================================================================
+       SECTION HEADERS & LAYOUT
+       ========================================================================== */
+    section {
+      margin-bottom: 4rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 1.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: normal;
+    }
+
+    /* ==========================================================================
+       ABOUT & PROFILE CARDS
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: var(--border-accent);
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4), 0 0 16px -4px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .bio-text {
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .bio-text strong {
+      color: var(--text-main);
+    }
+
+    .spec-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .spec-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.75rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+    }
+
+    .spec-name {
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+
+    .spec-value {
+      color: var(--text-bright);
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       TOOLBOX & TECH STACK (CATEGORIZED PILLS)
+       ========================================================================== */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .stack-category {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .stack-cat-title {
+      font-size: 0.95rem;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .tech-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s ease;
+    }
+
+    .tech-pill:hover {
+      background: var(--accent-glow);
+      border-color: var(--border-accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       PROJECTS GRID & EXPERIMENTS
+       ========================================================================== */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .project-card:hover {
+      border-color: var(--border-accent);
+      box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.5), 0 0 20px -4px var(--accent-glow);
+      transform: translateY(-3px);
+    }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+      gap: 0.75rem;
+    }
+
+    .project-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .project-badge.active {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+
+    .project-badge.homelab {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+    }
+
+    .project-badge.utility {
+      background: rgba(168, 85, 247, 0.12);
+      border-color: rgba(168, 85, 247, 0.3);
+      color: #c084fc;
+    }
+
+    .project-title {
+      font-size: 1.18rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .project-desc {
+      font-size: 0.91rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.84rem;
+      color: var(--text-dim);
+    }
+
+    .project-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .project-features li::before {
+      content: "▹";
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .project-tag {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       HOMELAB & SELF-HOSTED SERVICES
+       ========================================================================== */
+    .homelab-banner {
+      background: linear-gradient(135deg, rgba(14, 20, 35, 0.9) 0%, rgba(20, 30, 55, 0.8) 100%);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .homelab-header-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .service-tile {
+      background: rgba(9, 13, 22, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      transition: all 0.2s ease;
+    }
+
+    .service-tile:hover {
+      background: rgba(9, 13, 22, 0.9);
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+    }
+
+    .service-icon {
+      font-size: 1.3rem;
+      padding: 0.4rem;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+    }
+
+    .service-info h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .service-info p {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* ==========================================================================
+       QUICK FACTS / TIDBITS CARDS
+       ========================================================================== */
+    .facts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+    }
+
+    .fact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .fact-card:hover {
+      border-color: var(--border-accent);
+    }
+
+    .fact-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-bright);
+    }
+
+    .fact-card p {
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    /* ==========================================================================
+       CONTACT & FOOTER
+       ========================================================================== */
+    .connect-box {
+      background: linear-gradient(180deg, var(--bg-card) 0%, rgba(9, 13, 22, 0.9) 100%);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .connect-title {
+      font-size: 1.85rem;
+    }
+
+    .connect-desc {
+      max-width: 500px;
+      font-size: 0.98rem;
+    }
+
+    .connect-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .copy-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-medium);
+      padding: 0.55rem 1rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-chip:hover {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 2rem 0 3rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #111827;
+      color: #fff;
+      border: 1px solid var(--accent);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px var(--accent-glow-strong);
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN (MOBILE & TABLET)
+       ========================================================================== */
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 0 2.5rem;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .navbar {
+        border-radius: var(--radius-md);
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        padding: 0 1rem;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .connect-box {
+        padding: 1.75rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Light Background Grids & Orbs -->
+  <div class="bg-canvas" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+  </div>
+
+  <div class="container">
+    
+    <!-- Top Navigation Header -->
+    <header>
+      <nav class="navbar" aria-label="Main Navigation">
+        <a href="#" class="nav-brand">
+          <div class="brand-icon">M</div>
+          <span>micah.gentry</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#toolbox">Toolbox</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#homelab">Homelab</a></li>
+          <li><a href="#connect">Connect</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <div class="status-pill" title="Live status">
+            <span class="status-dot"></span>
+            <span>in homelab</span>
+          </div>
+
+          <!-- Quick Theme Accent Switcher -->
+          <div class="theme-picker" title="Switch accent theme">
+            <button class="theme-btn active" data-theme-set="default" aria-label="Cyan Accent"></button>
+            <button class="theme-btn" data-theme-set="emerald" aria-label="Emerald Accent"></button>
+            <button class="theme-btn" data-theme-set="violet" aria-label="Violet Accent"></button>
+            <button class="theme-btn" data-theme-set="amber" aria-label="Amber Accent"></button>
+            <button class="theme-btn" data-theme-set="rose" aria-label="Rose Accent"></button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
+            </svg>
+            <span>dev // sysadmin // builder</span>
+          </div>
+
+          <h1 class="hero-title">
+            Hey, I'm <span class="gradient-text">Micah</span>.
+          </h1>
+
+          <p class="hero-subtitle">
+            Tinkering with backend architecture, self-hosting unreasonable amounts of data, and building games when I'm not fighting system configs.
+          </p>
+
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+              <span>Explore Projects</span>
+            </a>
+
+            <button class="btn btn-secondary" onclick="copyContact('email', 'micah@patrick-gentry.net')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy Email</span>
+            </button>
+
+            <a href="https://github.com/micahgen12" target="_blank" rel="noopener noreferrer" class="btn-icon" title="GitHub: @micahgen12">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+
+            <a href="#homelab" class="btn-icon" title="Homelab Infrastructure">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Interactive Terminal Widget -->
+        <div class="terminal-card" aria-label="Interactive Terminal">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="terminal-dot dot-red"></span>
+              <span class="terminal-dot dot-yellow"></span>
+              <span class="terminal-dot dot-green"></span>
+            </div>
+            <div class="terminal-title">micah@homelab:~ (zsh)</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">SSH: 22</div>
+          </div>
+
+          <div class="terminal-tabs">
+            <button class="term-tab active" onclick="switchTermTab('neofetch')">neofetch</button>
+            <button class="term-tab" onclick="switchTermTab('whoami')">whoami</button>
+            <button class="term-tab" onclick="switchTermTab('services')">services</button>
+            <button class="term-tab" onclick="switchTermTab('hobbies')">hobbies</button>
+          </div>
+
+          <div class="terminal-body" id="terminal-content">
+            <!-- Dynamic tab content injected via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-tag">// 01</span> About Me
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">overview.md</span>
+        </div>
+
+        <div class="about-grid">
+          <div class="card">
+            <h3 class="card-title">
+              <span>Passionate Systems Developer</span>
+            </h3>
+            <p class="bio-text">
+              I'm a student and developer passionate about low-level systems, robust backend infrastructure, and game logic. 
+              When I'm not writing code in <strong>C#</strong>, <strong>Lua</strong>, or <strong>Python</strong>, I'm usually tweaking desktop environments on <strong>Arch Linux</strong>, configuring my home servers, or hanging out with my dog and cats.
+            </p>
+            <p class="bio-text">
+              I believe in clean architecture, fast execution, self-reliance through self-hosting, and systems that just work without unnecessary overhead.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title" style="font-size: 1.05rem;">
+              <span>System Specs & Vitals</span>
+            </h3>
+            <ul class="spec-list">
+              <li class="spec-item">
+                <span class="spec-name">Primary OS</span>
+                <span class="spec-value mono">Arch Linux</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-name">Daily Shell</span>
+                <span class="spec-value mono">Zsh + Tmux</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-name">Core Focus</span>
+                <span class="spec-value">Backend & Games</span>
+              </li>
+              <li class="spec-item">
+                <span class="spec-name">Companion</span>
+                <span class="spec-value">🐕 Dog + 🐈 Cats</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Toolbox & Tech Stack -->
+      <section id="toolbox">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-tag">// 02</span> Toolbox & Tech Stack
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">skills.json</span>
+        </div>
+
+        <div class="stack-grid">
+          <!-- Languages -->
+          <div class="stack-category">
+            <div class="stack-cat-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              <span>Languages</span>
+            </div>
+            <div class="tech-pills">
+              <span class="tech-pill"><strong>C#</strong> (.NET)</span>
+              <span class="tech-pill"><strong>Lua</strong></span>
+              <span class="tech-pill"><strong>Python 3</strong></span>
+              <span class="tech-pill"><strong>Bash / Shell</strong></span>
+              <span class="tech-pill"><strong>SQL</strong> (PostgreSQL)</span>
+              <span class="tech-pill"><strong>HTML5 / CSS3</strong></span>
+            </div>
+          </div>
+
+          <!-- Systems & Infrastructure -->
+          <div class="stack-category">
+            <div class="stack-cat-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+              <span>Systems & Infra</span>
+            </div>
+            <div class="tech-pills">
+              <span class="tech-pill"><strong>Arch Linux</strong></span>
+              <span class="tech-pill"><strong>Docker & Compose</strong></span>
+              <span class="tech-pill"><strong>ZFS & NAS Storage</strong></span>
+              <span class="tech-pill"><strong>Self-Hosting</strong></span>
+              <span class="tech-pill"><strong>Caddy / Nginx</strong></span>
+              <span class="tech-pill"><strong>Git & CI/CD</strong></span>
+              <span class="tech-pill"><strong>WireGuard VPN</strong></span>
+            </div>
+          </div>
+
+          <!-- Game Dev & Tools -->
+          <div class="stack-category">
+            <div class="stack-cat-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="8" cy="12" r="2"></circle><path d="M15 12h2"></path><path d="M16 11v2"></path></svg>
+              <span>Game Dev & Workflow</span>
+            </div>
+            <div class="tech-pills">
+              <span class="tech-pill"><strong>Unity Engine</strong></span>
+              <span class="tech-pill"><strong>Custom Game Mechanics</strong></span>
+              <span class="tech-pill"><strong>Lua Scripting Sandboxes</strong></span>
+              <span class="tech-pill"><strong>Neovim / VS Code</strong></span>
+              <span class="tech-pill"><strong>System Automation</strong></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Projects -->
+      <section id="projects">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-tag">// 03</span> Projects & Experiments
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">featured_repos</span>
+        </div>
+
+        <div class="project-grid">
+          <!-- Project 1: Game Dev -->
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge active">🎮 Game Engine</span>
+                <span style="font-size: 1.2rem;">🕹️</span>
+              </div>
+              <h3 class="project-title">Game Mechanics & Sandboxes</h3>
+              <p class="project-desc">
+                Custom gameplay systems, modular player controllers, and sandbox mechanics in Unity using C# and Lua runtime scripting.
+              </p>
+              <ul class="project-features">
+                <li>Component-based physics and interaction frameworks</li>
+                <li>Embedded Lua scripting for modding & toolkits</li>
+                <li>Dynamic level tools and state management</li>
+              </ul>
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Unity</span>
+              <span class="project-tag">C#</span>
+              <span class="project-tag">Lua</span>
+              <span class="project-tag">Game Logic</span>
+            </div>
+          </article>
+
+          <!-- Project 2: Home Server & Storage -->
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge homelab">🖥️ Infrastructure</span>
+                <span style="font-size: 1.2rem;">💾</span>
+              </div>
+              <h3 class="project-title">Private Homelab & Storage Node</h3>
+              <p class="project-desc">
+                High-availability home server cluster with redundant ZFS storage pools, private Git servers, secure remote tunnels, and container orchestration.
+              </p>
+              <ul class="project-features">
+                <li>Automated encrypted snapshot routines (ZFS)</li>
+                <li>Docker-compose microservice architecture</li>
+                <li>Encrypted mesh networking via WireGuard</li>
+              </ul>
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Arch Linux</span>
+              <span class="project-tag">Docker</span>
+              <span class="project-tag">ZFS</span>
+              <span class="project-tag">Self-Hosted</span>
+            </div>
+          </article>
+
+          <!-- Project 3: Automation & Utilities -->
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge utility">⚡ Tooling</span>
+                <span style="font-size: 1.2rem;">⚙️</span>
+              </div>
+              <h3 class="project-title">Automation & System Utilities</h3>
+              <p class="project-desc">
+                Command-line suites for real-time weather monitoring, automated server backup validation, boot maintenance hooks, and desktop integrations.
+              </p>
+              <ul class="project-features">
+                <li>Desktop weather alert daemons with zero overhead</li>
+                <li>Custom Arch Linux maintenance and backup triggers</li>
+                <li>Lightweight system notification pipelines</li>
+              </ul>
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Bash</span>
+              <span class="project-tag">Systemd</span>
+              <span class="project-tag">CLI</span>
+            </div>
+          </article>
+
+          <!-- Project 4: Dotfiles & Environment -->
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge active">🛡️ Environment</span>
+                <span style="font-size: 1.2rem;">💻</span>
+              </div>
+              <h3 class="project-title">Arch Linux Workstation Config</h3>
+              <p class="project-desc">
+                Carefully tuned dotfiles and keyboard-driven window management configurations optimized for zero bloat, high responsiveness, and developer ergonomics.
+              </p>
+              <ul class="project-features">
+                <li>Modular Zsh & Tmux development workflow</li>
+                <li>Custom status monitoring widgets and color tokens</li>
+                <li>Automated deployment scripts for fresh machines</li>
+              </ul>
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Arch Linux</span>
+              <span class="project-tag">Zsh</span>
+              <span class="project-tag">Dotfiles</span>
+              <span class="project-tag">Neovim</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Homelab Architecture & Services -->
+      <section id="homelab">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-tag">// 04</span> Homelab Topology
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">status: 99.9% uptime</span>
+        </div>
+
+        <div class="homelab-banner">
+          <div class="homelab-header-wrap">
+            <div>
+              <h3 style="font-size: 1.2rem; margin-bottom: 0.25rem;">Dedicated Self-Hosted Stack</h3>
+              <p style="font-size: 0.88rem; color: var(--text-muted);">
+                Running private infrastructure with privacy, performance, and complete data ownership.
+              </p>
+            </div>
+            <div class="status-pill" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">
+              <span>🌐 LAN + WireGuard WAN</span>
+            </div>
+          </div>
+
+          <div class="service-grid">
+            <div class="service-tile">
+              <div class="service-icon">🐙</div>
+              <div class="service-info">
+                <h4>Private Git</h4>
+                <p>Self-hosted repos & webhooks</p>
+              </div>
+            </div>
+
+            <div class="service-tile">
+              <div class="service-icon">💽</div>
+              <div class="service-info">
+                <h4>ZFS Storage</h4>
+                <p>RAID-Z arrays & scrub jobs</p>
+              </div>
+            </div>
+
+            <div class="service-tile">
+              <div class="service-icon">🛡️</div>
+              <div class="service-info">
+                <h4>WireGuard</h4>
+                <p>Encrypted mesh tunnel</p>
+              </div>
+            </div>
+
+            <div class="service-tile">
+              <div class="service-icon">🚦</div>
+              <div class="service-info">
+                <h4>Reverse Proxy</h4>
+                <p>Caddy SSL & rate limits</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Facts & Philosophy -->
+      <section id="facts">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-tag">// 05</span> Quick Facts & Thoughts
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">trivia.txt</span>
+        </div>
+
+        <div class="facts-grid">
+          <div class="fact-card">
+            <div class="fact-header">
+              <span>🥖 Sourdough Bread</span>
+            </div>
+            <p>
+              Criminally underrated. Fermentation, wild yeast, and a crackling crust is peak kitchen engineering.
+            </p>
+          </div>
+
+          <div class="fact-card">
+            <div class="fact-header">
+              <span>🌧️ Ideal Atmosphere</span>
+            </div>
+            <p>
+              Heavy thunderstorm outside, dark room, glowing code editor, and zero ping notifications.
+            </p>
+          </div>
+
+          <div class="fact-card">
+            <div class="fact-header">
+              <span>⚙️ Tech Philosophy</span>
+            </div>
+            <p>
+              If it has an operating system, it can probably run faster, leaner, and with far less bloat.
+            </p>
+          </div>
+
+          <div class="fact-card">
+            <div class="fact-header">
+              <span>🐾 The Crew</span>
+            </div>
+            <p>
+              Accompanied by one loyal dog and mischievous cats keeping debugging sessions lively.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Connect Section -->
+      <section id="connect">
+        <div class="connect-box">
+          <span class="hero-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span>Let's Build Something</span>
+          </span>
+
+          <h2 class="connect-title">Get in Touch</h2>
+          <p class="connect-desc">
+            Whether you want to discuss backend systems, self-hosting setups, game mechanics, or sourdough recipes, feel free to drop a line!
+          </p>
+
+          <div class="connect-actions">
+            <button class="copy-chip" onclick="copyContact('email', 'micah@patrick-gentry.net')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Email: micah@patrick-gentry.net</span>
+            </button>
+
+            <button class="copy-chip" onclick="copyContact('discord', 'micahgen67')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6h-5m0 0H8a4 4 0 0 0-4 4v4a4 4 0 0 0 4 4h5m0 0h5a4 4 0 0 0 4-4v-4a4 4 0 0 0-4-4z"></path></svg>
+              <span>Discord: @micahgen67</span>
+            </button>
+
+            <a href="https://github.com/micahgen12" target="_blank" rel="noopener noreferrer" class="copy-chip">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              <span>GitHub: @micahgen12</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; <span id="current-year">2026</span> Micah Gentry. All rights reserved.</p>
+      <div class="footer-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Zero tracking • High performance • Self-contained</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Toast Notification Popup -->
+  <div id="toast" class="toast" role="alert" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toast-message">Copied to clipboard!</span>
+  </div>
+
+  <!-- Interactive Client-Side JavaScript -->
+  <script>
+    // =========================================================================
+    // TERMINAL WIDGET LOGIC
+    // =========================================================================
+    const terminalData = {
+      neofetch: `
+        <div style="display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap;">
+          <div style="color: var(--accent); font-weight: bold; line-height: 1.2; font-family: monospace;">
+  /\\<br>
+ /  \\<br>
+/\\   \\<br>
+/      \\<br>
+/   ,,   \\<br>
+/   |  |  \\<br>
+/_-'' ''-_\\
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+            <div class="term-row"><span class="term-key">micah@homelab</span></div>
+            <div style="border-bottom: 1px dashed var(--border-subtle); margin-bottom: 0.4rem;"></div>
+            <div class="term-row"><span class="term-key">OS:</span> <span class="term-val">Arch Linux x86_64</span></div>
+            <div class="term-row"><span class="term-key">Host:</span> <span class="term-val">Ryzen Homelab Server</span></div>
+            <div class="term-row"><span class="term-key">Kernel:</span> <span class="term-val">6.x.x-zen</span></div>
+            <div class="term-row"><span class="term-key">Uptime:</span> <span class="term-val">42 days, 7 hours</span></div>
+            <div class="term-row"><span class="term-key">Shell:</span> <span class="term-val">zsh 5.9</span></div>
+            <div class="term-row"><span class="term-key">WM / DE:</span> <span class="term-val">Tiling WM + Wayland</span></div>
+            <div class="term-row"><span class="term-key">Memory:</span> <span class="term-val">32GiB ECC DDR4</span></div>
+            <div class="term-row"><span class="term-key">Storage:</span> <span class="term-val">48TB ZFS Pool (Encrypted)</span></div>
+          </div>
+        </div>
+        <div class="term-prompt">
+          <span>micah@homelab:~$</span> <span class="term-val">echo "Ready for the next build"</span> <span class="term-cursor"></span>
+        </div>
+      `,
+      whoami: `
+        <div style="margin-bottom: 0.75rem;">
+          <span style="color: #34d399; font-weight: bold;">[IDENTIFICATION]</span>
+        </div>
+        <div class="term-row"><span class="term-key">Name:</span> <span class="term-val">Micah Gentry</span></div>
+        <div class="term-row"><span class="term-key">Role:</span> <span class="term-val">Student, Developer & Sysadmin</span></div>
+        <div class="term-row"><span class="term-key">Passions:</span> <span class="term-val">C#, Lua, Game Mechanics, Homelabs</span></div>
+        <div class="term-row"><span class="term-key">Status:</span> <span class="term-val">Exploring new systems & compiling code</span></div>
+        <div class="term-row"><span class="term-key">Location:</span> <span class="term-val">United States (Local time active)</span></div>
+        <div class="term-prompt">
+          <span>micah@homelab:~$</span> <span class="term-val">cat /etc/motd</span> <span class="term-cursor"></span>
+        </div>
+      `,
+      services: `
+        <div style="margin-bottom: 0.5rem; color: var(--accent); font-weight: bold;">
+          [RUNNING CONTAINERS - DOCKER PS]
+        </div>
+        <div class="term-row"><span class="term-key">forgejo/git:</span> <span class="term-val" style="color: #34d399;">● UP (port 3000)</span></div>
+        <div class="term-row"><span class="term-key">caddy/proxy:</span> <span class="term-val" style="color: #34d399;">● UP (port 80, 443 - TLS auto)</span></div>
+        <div class="term-row"><span class="term-key">wireguard:</span> <span class="term-val" style="color: #34d399;">● UP (port 51820/udp)</span></div>
+        <div class="term-row"><span class="term-key">zfs-scrub:</span> <span class="term-val" style="color: #34d399;">● Periodic (Healthy 0 errors)</span></div>
+        <div class="term-row"><span class="term-key">metrics:</span> <span class="term-val" style="color: #34d399;">● UP (node_exporter)</span></div>
+        <div class="term-prompt">
+          <span>micah@homelab:~$</span> <span class="term-val">systemctl is-system-running</span> <span class="term-cursor"></span>
+        </div>
+      `,
+      hobbies: `
+        <div style="margin-bottom: 0.5rem; color: #f59e0b; font-weight: bold;">
+          [PERSONAL INTERESTS]
+        </div>
+        <div class="term-row"><span class="term-key">Gamedev:</span> <span class="term-val">Unity, C#, Lua physics sandboxes</span></div>
+        <div class="term-row"><span class="term-key">Hardware:</span> <span class="term-val">Custom PC builds, NAS optimization</span></div>
+        <div class="term-row"><span class="term-key">Baking:</span> <span class="term-val">Artisan Sourdough (10/10 rating)</span></div>
+        <div class="term-row"><span class="term-key">Animals:</span> <span class="term-val">1 dog, multiple cats</span></div>
+        <div class="term-row"><span class="term-key">Weather:</span> <span class="term-val">Rainstorms & thunder</span></div>
+        <div class="term-prompt">
+          <span>micah@homelab:~$</span> <span class="term-val">uptime</span> <span class="term-cursor"></span>
+        </div>
+      `
+    };
+
+    function switchTermTab(tabName) {
+      // Update Tab button active state
+      document.querySelectorAll('.term-tab').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.trim() === tabName) {
+          btn.classList.add('active');
+        }
+      });
+
+      // Inject Content
+      const container = document.getElementById('terminal-content');
+      if (terminalData[tabName]) {
+        container.innerHTML = terminalData[tabName];
+      }
+    }
+
+    // Initialize Default Tab
+    switchTermTab('neofetch');
+
+    // =========================================================================
+    // CLIPBOARD & TOAST NOTIFICATION
+    // =========================================================================
+    function copyContact(type, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(type === 'email' ? 'Email copied to clipboard!' : 'Discord handle copied!');
+      }).catch(() => {
+        showToast('Copied: ' + text);
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toast-message');
+      msg.textContent = message;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    // =========================================================================
+    // ACCENT COLOR THEME PICKER & LOCALSTORAGE
+    // =========================================================================
+    const themeButtons = document.querySelectorAll('.theme-btn');
+    const savedTheme = localStorage.getItem('micah_theme') || 'default';
+
+    function applyTheme(theme) {
+      if (theme === 'default') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+      
+      themeButtons.forEach(btn => {
+        if (btn.getAttribute('data-theme-set') === theme) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      localStorage.setItem('micah_theme', theme);
+    }
+
+    themeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.getAttribute('data-theme-set');
+        applyTheme(theme);
+      });
+    });
+
+    applyTheme(savedTheme);
+
+    // =========================================================================
+    // DYNAMIC YEAR
+    // =========================================================================
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
