@@ -4,7 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Micah Gentry - Developer, Sysadmin, and Builder. Portfolio, projects, and homelab showcase." />
-  <title>Micah Gentry | Developer & Sysadmin</title>
+  <title>Micah Gentry | Developer &amp; Sysadmin</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080b12'/%3E%3Ctext x='32' y='44' font-family='monospace' font-size='36' font-weight='bold' fill='%2338bdf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+  <link rel="canonical" href="https://micahgen2.github.io/" />
+  <meta name="theme-color" content="#080b12" />
+  <meta property="og:title" content="Micah Gentry | Developer &amp; Sysadmin" />
+  <meta property="og:description" content="Micah Gentry - Developer, Sysadmin, and Builder. Portfolio, projects, and homelab showcase." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://micahgen2.github.io/" />
+  <meta name="twitter:card" content="summary" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Micah Gentry",
+    "url": "https://micahgen2.github.io/",
+    "jobTitle": "Developer & Sysadmin",
+    "sameAs": ["https://github.com/micahgen2"]
+  }
+  </script>
   
   <!-- Preconnect Google Fonts for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1117,9 +1135,62 @@
         padding: 1.75rem 1rem;
       }
     }
+
+    /* Skip link, keyboard focus & reduced motion */
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 200;
+      background: var(--accent);
+      color: #050810;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.5rem 0.9rem;
+      border-radius: var(--radius-sm);
+      transform: translateY(-200%);
+      transition: transform 0.2s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+      color: #050810;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .repo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .repo-link:hover {
+      gap: 0.55rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#about">Skip to content</a>
 
   <!-- Ambient Light Background Grids & Orbs -->
   <div class="bg-canvas" aria-hidden="true">
@@ -1143,6 +1214,7 @@
           <li><a href="#about">About</a></li>
           <li><a href="#toolbox">Toolbox</a></li>
           <li><a href="#projects">Projects</a></li>
+          <li><a href="#repos">Repos</a></li>
           <li><a href="#homelab">Homelab</a></li>
           <li><a href="#connect">Connect</a></li>
         </ul>
@@ -1463,11 +1535,148 @@
         </div>
       </section>
 
+      <!-- Open Source Repos -->
+      <section id="repos">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-tag">// 04</span> Open Source
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">public_repos</span>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge active">C#</span>
+                <span style="font-size: 1.2rem;">&#9000;</span>
+              </div>
+              <h3 class="project-title mono">WinLinuxTerm</h3>
+              <p class="project-desc">
+                Windows Terminal Emulator with Linux command emulation written in C# (.NET 10).
+              </p>
+            </div>
+            <div>
+              <a class="repo-link" href="https://github.com/micahgen2/WinLinuxTerm" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
+              <div class="project-tags">
+                <span class="project-tag">C#</span>
+                <span class="project-tag">.NET 10</span>
+                <span class="project-tag">Terminal</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge utility">Python</span>
+                <span style="font-size: 1.2rem;">&#128230;</span>
+              </div>
+              <h3 class="project-title mono">pacgui</h3>
+              <p class="project-desc">
+                Modern GTK4 / Libadwaita graphical package manager for Arch Linux &amp; ALPM distributions.
+              </p>
+            </div>
+            <div>
+              <a class="repo-link" href="https://github.com/micahgen2/pacgui" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
+              <div class="project-tags">
+                <span class="project-tag">Python</span>
+                <span class="project-tag">GTK4</span>
+                <span class="project-tag">Arch Linux</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge homelab">C#</span>
+                <span style="font-size: 1.2rem;">&#128200;</span>
+              </div>
+              <h3 class="project-title mono">SysMonCSharp</h3>
+              <p class="project-desc">
+                Modern, high-performance system monitor written in C# with an Avalonia desktop GUI, Spectre.Console TUI, and embedded web dashboard.
+              </p>
+            </div>
+            <div>
+              <a class="repo-link" href="https://github.com/micahgen2/SysMonCSharp" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
+              <div class="project-tags">
+                <span class="project-tag">C#</span>
+                <span class="project-tag">Avalonia</span>
+                <span class="project-tag">Monitoring</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge utility">Python</span>
+                <span style="font-size: 1.2rem;">&#128190;</span>
+              </div>
+              <h3 class="project-title mono">usb-flasher</h3>
+              <p class="project-desc">
+                High-performance, safe USB disk image flasher for Linux supporting .iso, .img, .xz, .gz, .bz2, .zip, and .zst.
+              </p>
+            </div>
+            <div>
+              <a class="repo-link" href="https://github.com/micahgen2/usb-flasher" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
+              <div class="project-tags">
+                <span class="project-tag">Python</span>
+                <span class="project-tag">Linux</span>
+                <span class="project-tag">CLI</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge active">TypeScript</span>
+                <span style="font-size: 1.2rem;">&#128172;</span>
+              </div>
+              <h3 class="project-title mono">aethercord</h3>
+              <p class="project-desc">
+                A custom Discord client, built from scratch.
+              </p>
+            </div>
+            <div>
+              <a class="repo-link" href="https://github.com/micahgen2/aethercord" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
+              <div class="project-tags">
+                <span class="project-tag">TypeScript</span>
+                <span class="project-tag">Discord</span>
+                <span class="project-tag">Client</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge homelab">More</span>
+                <span style="font-size: 1.2rem;">&#128025;</span>
+              </div>
+              <h3 class="project-title">Everything else lives on GitHub</h3>
+              <p class="project-desc">
+                Bots, desktop apps, experiments, and works in progress, all under one profile.
+              </p>
+            </div>
+            <div>
+              <a class="repo-link" href="https://github.com/micahgen2?tab=repositories" target="_blank" rel="noopener noreferrer">Browse all repos &rarr;</a>
+              <div class="project-tags">
+                <span class="project-tag">GitHub</span>
+                <span class="project-tag">@micahgen2</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <!-- Homelab Architecture & Services -->
       <section id="homelab">
         <div class="section-header">
           <h2 class="section-title">
-            <span class="section-tag">// 04</span> Homelab Topology
+            <span class="section-tag">// 05</span> Homelab Topology
           </h2>
           <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">status: 99.9% uptime</span>
         </div>
@@ -1525,7 +1734,7 @@
       <section id="facts">
         <div class="section-header">
           <h2 class="section-title">
-            <span class="section-tag">// 05</span> Quick Facts & Thoughts
+            <span class="section-tag">// 06</span> Quick Facts & Thoughts
           </h2>
           <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">trivia.txt</span>
         </div>
@@ -1605,6 +1814,7 @@
     <!-- Footer -->
     <footer>
       <p>&copy; <span id="current-year">2026</span> Micah Gentry. All rights reserved.</p>
+      <p>Last updated October 2026.</p>
       <div class="footer-badge">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
         <span>Zero tracking • High performance • Self-contained</span>
