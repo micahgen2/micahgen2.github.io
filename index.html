@@ -1106,10 +1106,60 @@
       .navbar {
         border-radius: var(--radius-md);
         flex-wrap: wrap;
+        row-gap: 0.5rem;
+        top: 0.5rem;
       }
 
+      /* Keep section links reachable: second row, swipeable, no wrapping */
       .nav-links {
+        order: 3;
+        flex-basis: 100%;
+        display: flex;
+        gap: 0.25rem;
+        overflow-x: auto;
+        padding-bottom: 0.15rem;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .nav-links::-webkit-scrollbar {
         display: none;
+      }
+
+      .nav-links a {
+        white-space: nowrap;
+        padding: 0.45rem 0.7rem;
+      }
+
+      .nav-actions {
+        margin-left: auto;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      /* Bigger tap targets for the accent dots */
+      .theme-btn {
+        width: 22px;
+        height: 22px;
+      }
+
+      .theme-picker {
+        gap: 0.55rem;
+        padding: 0.3rem 0.55rem;
+      }
+
+      /* Terminal: let long rows scroll instead of clipping */
+      .terminal-body {
+        overflow-x: auto;
+      }
+
+      .term-row {
+        flex-wrap: wrap;
+      }
+
+      .glow-orb {
+        filter: blur(60px);
+        opacity: 0.15;
       }
     }
 
@@ -1133,6 +1183,64 @@
 
       .connect-box {
         padding: 1.75rem 1rem;
+      }
+
+      /* One column everywhere: minmax(300px+) grids clip on 320px phones */
+      .project-grid,
+      .stack-grid,
+      .facts-grid,
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+
+      /* Terminal header + rows wrap instead of squeezing */
+      .terminal-header {
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+
+      .terminal-title {
+        font-size: 0.7rem;
+      }
+
+      .terminal-body {
+        font-size: 0.76rem;
+        padding: 0.9rem;
+      }
+
+      .term-key {
+        min-width: 0;
+      }
+
+      /* Contact chips: full width, long email address wraps, thumb friendly */
+      .connect-actions {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
+
+      .connect-actions .copy-chip {
+        justify-content: center;
+        max-width: 100%;
+      }
+
+      .copy-chip span {
+        overflow-wrap: anywhere;
+        text-align: center;
+      }
+
+      /* Toast spans the screen edges instead of floating off-canvas */
+      .toast {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        justify-content: center;
+        text-align: center;
       }
     }
 
