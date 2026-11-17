@@ -5,14 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Micah Gentry - Developer, Sysadmin, and Builder. Portfolio, projects, and homelab showcase." />
   <title>Micah Gentry | Developer &amp; Sysadmin</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080b12'/%3E%3Ctext x='32' y='44' font-family='monospace' font-size='36' font-weight='bold' fill='%2338bdf8' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="canonical" href="https://micahgen2.github.io/" />
   <meta name="theme-color" content="#080b12" />
   <meta property="og:title" content="Micah Gentry | Developer &amp; Sysadmin" />
   <meta property="og:description" content="Micah Gentry - Developer, Sysadmin, and Builder. Portfolio, projects, and homelab showcase." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://micahgen2.github.io/" />
-  <meta name="twitter:card" content="summary" />
+  <!-- og-image.png: generated 1200x630 social card. The GitHub connector cannot
+       push binary files, so upload og-image.png to the repo root once (GitHub web
+       UI drag-and-drop) and this tag starts working. og-image.svg is in the repo
+       as a vector version in the meantime. -->
+  <meta property="og:image" content="https://micahgen2.github.io/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Micah Gentry — dev // sysadmin // builder" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://micahgen2.github.io/og-image.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -340,37 +349,19 @@
       50% { opacity: 0.4; transform: scale(0.85); }
     }
 
-    /* Accent Switcher Dropdown */
-    .theme-picker {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.2rem 0.4rem;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-full);
-    }
-
-    .theme-btn {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .theme-btn:hover, .theme-btn.active {
-      transform: scale(1.3);
-      box-shadow: 0 0 6px currentColor;
-    }
-
-    .theme-btn[data-theme-set="default"] { background-color: #38bdf8; color: #38bdf8; }
-    .theme-btn[data-theme-set="emerald"] { background-color: #10b981; color: #10b981; }
-    .theme-btn[data-theme-set="violet"] { background-color: #a855f7; color: #a855f7; }
-    .theme-btn[data-theme-set="amber"] { background-color: #f59e0b; color: #f59e0b; }
-    .theme-btn[data-theme-set="rose"] { background-color: #f43f5e; color: #f43f5e; }
+    /* Accent Picker — named dropdown (dark only, persisted in localStorage) */
+    .theme-picker { position: relative; }
+    .theme-picker-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-subtle); border-radius: var(--radius-full); color: var(--text-main); font-family: var(--font-mono); font-size: 0.78rem; padding: 0.35rem 0.7rem; cursor: pointer; white-space: nowrap; }
+    .theme-picker-btn:hover { border-color: var(--border-accent); }
+    .theme-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); flex-shrink: 0; }
+    .theme-caret { color: var(--text-dim); font-size: 0.65rem; }
+    .theme-menu { position: absolute; right: 0; top: calc(100% + 8px); min-width: 160px; background: #111726; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 0.35rem; box-shadow: var(--shadow-lg); z-index: 80; }
+    .theme-menu[hidden] { display: none; }
+    .theme-option { display: flex; align-items: center; gap: 0.6rem; width: 100%; background: transparent; border: none; color: var(--text-main); font-family: var(--font-mono); font-size: 0.83rem; padding: 0.5rem 0.6rem; border-radius: 6px; cursor: pointer; text-align: left; }
+    .theme-option:hover { background: rgba(255, 255, 255, 0.06); }
+    .theme-option.active { color: var(--accent); }
+    .theme-swatch { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .theme-check { margin-left: auto; color: var(--accent); font-size: 0.8rem; }
 
     /* ==========================================================================
        HERO SECTION
@@ -944,46 +935,6 @@
       gap: 0.75rem;
     }
 
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .service-tile {
-      background: rgba(9, 13, 22, 0.6);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      transition: all 0.2s ease;
-    }
-
-    .service-tile:hover {
-      background: rgba(9, 13, 22, 0.9);
-      border-color: var(--border-accent);
-      transform: translateY(-2px);
-    }
-
-    .service-icon {
-      font-size: 1.3rem;
-      padding: 0.4rem;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 6px;
-    }
-
-    .service-info h4 {
-      font-size: 0.9rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .service-info p {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-    }
 
     /* ==========================================================================
        QUICK FACTS / TIDBITS CARDS
@@ -1228,8 +1179,7 @@
       /* One column everywhere: minmax(300px+) grids clip on 320px phones */
       .project-grid,
       .stack-grid,
-      .facts-grid,
-      .service-grid {
+      .facts-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1342,10 +1292,178 @@
         transition-duration: 0.01ms !important;
       }
     }
+
+    /* ==========================================================================
+       REDESIGN — boot screen, file tree, terminal input, spotlight,
+       timeline, rack, CRT, reveal, hero canvas, build log, uses
+       ========================================================================== */
+
+    /* Boot screen */
+    #boot-screen { position: fixed; inset: 0; z-index: 300; background: #05070c; color: #7dd3fc; font-family: var(--font-mono); font-size: 0.85rem; padding: 2rem; overflow: hidden; cursor: pointer; }
+    #boot-screen pre { white-space: pre-wrap; word-break: break-word; line-height: 1.7; margin: 0; }
+    #boot-screen .boot-skip { position: absolute; bottom: 1.25rem; left: 2rem; color: var(--text-dim); font-size: 0.75rem; }
+    #boot-screen.done { opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+
+    /* CRT overlay + toggle */
+    .crt-toggle { display: inline-flex; align-items: center; justify-content: center; height: 30px; padding: 0 0.6rem; border-radius: var(--radius-full); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-subtle); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; cursor: pointer; }
+    .crt-toggle:hover { color: var(--accent); border-color: var(--border-accent); }
+    .crt-toggle[aria-pressed="true"] { color: var(--accent); border-color: var(--border-accent); background: var(--accent-glow); }
+    #crt-overlay { position: fixed; inset: 0; z-index: 90; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 3px); }
+    #crt-overlay[hidden] { display: none; }
+    html.crt .terminal-card, html.crt .hero-title { text-shadow: 0 0 10px rgba(var(--accent-rgb), 0.4); }
+
+    /* Hamburger (mobile only) */
+    .hamburger { display: none; }
+
+    /* File tree — desktop sidebar at wide widths, slide-over on mobile */
+    .file-tree { display: none; }
+    .tree-backdrop[hidden] { display: none; }
+    @media (min-width: 1320px) {
+      body { padding-left: 232px; }
+      .file-tree { display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; width: 232px; z-index: 60; background: #0a0e19; border-right: 1px solid var(--border-subtle); padding: 1.25rem 0.9rem; font-family: var(--font-mono); font-size: 0.84rem; overflow-y: auto; }
+    }
+    .tree-title { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--text-dim); text-transform: uppercase; margin: 0.25rem 0.5rem 0.75rem; white-space: nowrap; }
+    .tree-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .tree-list a { display: flex; align-items: center; gap: 0.55rem; padding: 0.45rem 0.6rem; border-radius: 6px; color: var(--text-muted); font-size: 0.85rem; }
+    .tree-list a:hover { background: rgba(255, 255, 255, 0.05); color: var(--text-bright); }
+    .tree-list a.active { background: var(--accent-glow); color: var(--accent); }
+    .tree-list .tree-icon { width: 18px; text-align: center; flex-shrink: 0; }
+    .tree-dir { color: var(--text-dim); font-size: 0.78rem; padding: 0.7rem 0.6rem 0.3rem; }
+    .tree-foot { margin-top: auto; padding: 0.75rem 0.6rem 0; border-top: 1px solid var(--border-subtle); color: var(--text-dim); font-size: 0.75rem; line-height: 1.7; }
+
+    /* Terminal input line */
+    .terminal-body { max-height: 340px; overflow-y: auto; scrollbar-width: thin; }
+    .term-input-line { display: flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.1rem; border-top: 1px solid var(--border-subtle); background: #090d16; font-family: var(--font-mono); font-size: 0.82rem; }
+    .term-input-prompt { color: #34d399; white-space: nowrap; }
+    #term-input { flex: 1; background: transparent; border: none; outline: none; color: var(--text-main); font-family: var(--font-mono); font-size: 0.82rem; min-width: 0; }
+    #term-input::placeholder { color: var(--text-dim); }
+    .term-out { margin-bottom: 0.5rem; }
+
+    /* Typing caret + currently building */
+    .type-caret { display: inline-block; width: 2px; height: 1em; background: var(--accent); margin-left: 3px; vertical-align: -0.12em; animation: blink 0.9s step-end infinite; }
+    .now-building { display: flex; align-items: center; gap: 0.55rem; font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .now-building strong { color: var(--text-main); font-weight: 600; }
+    .now-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse-glow 2s infinite ease-in-out; flex-shrink: 0; }
+
+    /* Hero network canvas */
+    .hero { position: relative; }
+    .hero-net { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.55; pointer-events: none; }
+    .hero > *:not(.hero-net) { position: relative; z-index: 1; }
+
+    /* Spotlight */
+    .spotlight { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2rem; align-items: center; padding: 2rem; }
+    .spotlight h3 { font-size: 1.5rem; margin: 0.75rem 0; line-height: 1.25; }
+    .spotlight-diagram { background: rgba(9, 13, 22, 0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; }
+    .spotlight-diagram svg { width: 100%; height: auto; display: block; }
+    .diag-box { fill: #0d1322; stroke: rgba(255, 255, 255, 0.14); }
+    .diag-accent-box { stroke: rgba(var(--accent-rgb), 0.55); }
+    .diag-dashed { stroke-dasharray: 6 5; }
+    .diag-text { fill: #f1f5f9; font-size: 13px; font-weight: 600; font-family: var(--font-mono); }
+    .diag-sub { fill: #94a3b8; font-size: 11px; font-family: var(--font-mono); }
+    .diag-arrow { fill: var(--accent); font-size: 11px; font-family: var(--font-mono); }
+
+    /* Timeline */
+    .timeline { list-style: none; position: relative; margin: 0; padding-left: 1.75rem; }
+    .timeline::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(var(--accent), rgba(var(--accent-rgb), 0.08)); }
+    .timeline-item { position: relative; padding-bottom: 1.75rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot { position: absolute; left: -1.75rem; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg-base); border: 2px solid var(--accent); box-shadow: 0 0 10px var(--accent-glow-strong); }
+    .timeline-when { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); }
+    .timeline-item h3 { font-size: 1.1rem; margin: 0.15rem 0 0.35rem; }
+    .timeline-item p { font-size: 0.92rem; }
+
+    /* Homelab rack */
+    .status-panel { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: 1.25rem; padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.07); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.82rem; }
+    .status-panel[hidden] { display: none; }
+    .status-note { color: var(--text-dim); font-size: 0.78rem; }
+    .rack-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.25rem; align-items: start; }
+    .rack { background: #070a12; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 0.75rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .rack-unit { display: flex; align-items: center; gap: 0.75rem; width: 100%; text-align: left; background: #0d1322; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.7rem 0.9rem; color: var(--text-main); font-family: var(--font-mono); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+    .rack-unit:hover, .rack-unit[aria-pressed="true"] { border-color: var(--border-accent); background: var(--accent-glow); }
+    .rack-leds { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
+    .led { width: 7px; height: 7px; border-radius: 50%; background: #34d399; box-shadow: 0 0 6px #34d399; animation: led-blink 2.4s infinite ease-in-out; }
+    .led-amber { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; animation-delay: 0.8s; }
+    @keyframes led-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+    .rack-name { font-size: 0.88rem; font-weight: 600; white-space: nowrap; }
+    .rack-sub { font-size: 0.74rem; color: var(--text-dim); margin-left: auto; text-align: right; }
+    .rack-status { font-size: 0.72rem; white-space: nowrap; }
+    .rack-status .up { color: #34d399; }
+    .rack-status .down { color: #f87171; }
+    .rack-detail { padding: 1.25rem; }
+    .rack-detail h4 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .rack-detail p { font-size: 0.9rem; }
+    .rack-specs { margin-top: 0.75rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); line-height: 1.8; }
+
+    /* Contribution graph + repo language dots */
+    .contrib-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.25rem; overflow-x: auto; }
+    .contrib-card img { display: block; max-width: 100%; height: auto; }
+    .contrib-card figcaption { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); margin-top: 0.75rem; }
+    .repo-lang { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+    .lang-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+    /* Build log + uses */
+    .section-note { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); margin-bottom: 1.25rem; }
+    .buildlog-list { display: flex; flex-direction: column; gap: 1rem; }
+    .buildlog-entry { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; }
+    .buildlog-entry h3 { font-size: 1.05rem; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+    .buildlog-entry p { font-size: 0.9rem; }
+    .buildlog-status { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.15rem 0.55rem; border-radius: var(--radius-full); background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; }
+    .uses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
+    .uses-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; }
+    .uses-card h3 { font-size: 1rem; margin-bottom: 0.5rem; font-family: var(--font-mono); color: var(--accent); }
+    .uses-card p { font-size: 0.88rem; }
+    .uses-card ul { list-style: none; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.86rem; color: var(--text-muted); }
+
+    /* Footer cat */
+    .footer-cat { line-height: 0; opacity: 0.9; }
+    .footer-cat svg { width: 44px; height: 44px; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.revealed { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    /* Redesign responsive rules */
+    @media (max-width: 860px) {
+      .spotlight { grid-template-columns: 1fr; padding: 1.5rem; }
+      .rack-wrap { grid-template-columns: 1fr; }
+      .theme-picker { padding: 0; background: transparent; border: none; gap: 0; }
+      .nav-links { display: none; }
+      .hamburger { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-subtle); color: var(--text-main); font-size: 1.05rem; cursor: pointer; }
+      .hamburger:hover { color: var(--accent); border-color: var(--border-accent); }
+      .file-tree { display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; width: 272px; z-index: 120; background: #0a0e19; border-right: 1px solid var(--border-medium); padding: 1.25rem 0.9rem; font-family: var(--font-mono); font-size: 0.84rem; overflow-y: auto; transform: translateX(-105%); transition: transform 0.3s ease; box-shadow: 12px 0 36px rgba(0, 0, 0, 0.5); }
+      .file-tree.open { transform: translateX(0); }
+      .tree-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 110; }
+    }
   </style>
+  <noscript><style>#boot-screen { display: none; } .reveal { opacity: 1 !important; transform: none !important; } #hero-net { display: none; }</style></noscript>
 </head>
 <body>
   <a class="skip-link" href="#about">Skip to content</a>
+
+  <!-- Boot sequence overlay (JS fills the lines, ~1s, click / any key skips) -->
+  <div id="boot-screen" aria-hidden="true"><pre id="boot-lines"></pre><div class="boot-skip">press any key or click to skip</div></div>
+  <div id="crt-overlay" hidden aria-hidden="true"></div>
+
+  <!-- IDE-style file tree (desktop sidebar / mobile slide-over) -->
+  <aside class="file-tree" id="file-tree" aria-label="Site file tree">
+    <div class="tree-title">Explorer — micahgen2.github.io</div>
+    <ul class="tree-list">
+      <li><a href="#about"><span class="tree-icon">📄</span>about.md</a></li>
+      <li><a href="#toolbox"><span class="tree-icon">📄</span>skills.json</a></li>
+      <li class="tree-dir">▾ projects/</li>
+      <li><a href="#spotlight"><span class="tree-icon">⭐</span>recroom-spotlight.md</a></li>
+      <li><a href="#projects"><span class="tree-icon">📁</span>featured</a></li>
+      <li><a href="#repos"><span class="tree-icon">📁</span>open-source/</a></li>
+      <li><a href="#timeline"><span class="tree-icon">🕐</span>history.log</a></li>
+      <li><a href="#homelab"><span class="tree-icon">🖥️</span>homelab/</a></li>
+      <li><a href="#buildlog"><span class="tree-icon">🔨</span>build.log</a></li>
+      <li><a href="#uses"><span class="tree-icon">🧰</span>uses.md</a></li>
+      <li><a href="#connect"><span class="tree-icon">✉️</span>contact</a></li>
+    </ul>
+    <div class="tree-foot">micah@homelab: ~<br>dark mode only —<br>light mode was never an option</div>
+  </aside>
+  <div class="tree-backdrop" id="tree-backdrop" hidden></div>
 
   <!-- Ambient Light Background Grids & Orbs -->
   <div class="bg-canvas" aria-hidden="true">
@@ -1375,19 +1493,28 @@
         </ul>
 
         <div class="nav-actions">
+          <button id="hamburger" class="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="file-tree">☰</button>
           <div class="status-pill" title="Live status">
             <span class="status-dot"></span>
             <span>in homelab</span>
           </div>
 
-          <!-- Quick Theme Accent Switcher -->
-          <div class="theme-picker" title="Switch accent theme">
-            <button class="theme-btn active" data-theme-set="default" aria-label="Cyan Accent"></button>
-            <button class="theme-btn" data-theme-set="emerald" aria-label="Emerald Accent"></button>
-            <button class="theme-btn" data-theme-set="violet" aria-label="Violet Accent"></button>
-            <button class="theme-btn" data-theme-set="amber" aria-label="Amber Accent"></button>
-            <button class="theme-btn" data-theme-set="rose" aria-label="Rose Accent"></button>
+          <!-- Theme accent picker (named, persisted in localStorage) -->
+          <div class="theme-picker" id="theme-picker">
+            <button class="theme-picker-btn" id="theme-picker-btn" aria-haspopup="true" aria-expanded="false" title="Switch accent theme">
+              <span class="theme-dot" id="theme-dot"></span>
+              <span id="theme-name">Cyan</span>
+              <span class="theme-caret">▾</span>
+            </button>
+            <div class="theme-menu" id="theme-menu" role="menu" hidden>
+              <button class="theme-option" role="menuitem" data-theme-set="default"><span class="theme-swatch" style="background:#38bdf8"></span>Cyan<span class="theme-check"></span></button>
+              <button class="theme-option" role="menuitem" data-theme-set="emerald"><span class="theme-swatch" style="background:#10b981"></span>Emerald<span class="theme-check"></span></button>
+              <button class="theme-option" role="menuitem" data-theme-set="violet"><span class="theme-swatch" style="background:#a855f7"></span>Violet<span class="theme-check"></span></button>
+              <button class="theme-option" role="menuitem" data-theme-set="amber"><span class="theme-swatch" style="background:#f59e0b"></span>Amber<span class="theme-check"></span></button>
+              <button class="theme-option" role="menuitem" data-theme-set="rose"><span class="theme-swatch" style="background:#f43f5e"></span>Rose<span class="theme-check"></span></button>
+            </div>
           </div>
+          <button id="crt-toggle" class="crt-toggle" aria-pressed="false" title="CRT mode — scanlines + glow">CRT</button>
         </div>
       </nav>
     </header>
@@ -1395,12 +1522,13 @@
     <!-- Hero Section -->
     <main>
       <section class="hero">
+        <canvas id="hero-net" class="hero-net" aria-hidden="true"></canvas>
         <div class="hero-content">
           <div class="hero-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
             </svg>
-            <span>dev // sysadmin // builder</span>
+            <span id="role-typer">dev // sysadmin // builder</span><span class="type-caret" aria-hidden="true"></span>
           </div>
 
           <h1 class="hero-title">
@@ -1448,6 +1576,12 @@
             <span><strong>48TB</strong> ZFS homelab</span>
             <span><strong>C# · Python · Lua</strong></span>
           </div>
+
+          <!-- EDIT THIS LINE to change the "currently building" project -->
+          <div class="now-building">
+            <span class="now-dot" aria-hidden="true"></span>
+            <span>currently building: <strong>Rec Room revival backend</strong> — a from-scratch Photon replacement</span>
+          </div>
         </div>
 
         <!-- Interactive Terminal Widget -->
@@ -1470,8 +1604,39 @@
           </div>
 
           <div class="terminal-body" id="terminal-content">
-            <!-- Dynamic tab content injected via JS -->
+            <!-- No-JS fallback: static neofetch output. With JS, the tabs and the
+                 command line below replace this content. -->
+            <div style="display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap;">
+              <div style="color: var(--accent); font-weight: bold; line-height: 1.2; font-family: monospace; white-space: pre;">      /\
+     /  \
+    /    \
+   /      \
+  /   ,,   \
+ /   |  |   \
+/_-''    ''-\</div>
+              <div style="flex: 1; min-width: 200px;">
+                <div class="term-row"><span class="term-key">micah@homelab</span></div>
+                <div style="border-bottom: 1px dashed var(--border-subtle); margin-bottom: 0.4rem;"></div>
+                <div class="term-row"><span class="term-key">OS:</span> <span class="term-val">Arch Linux x86_64</span></div>
+                <div class="term-row"><span class="term-key">Host:</span> <span class="term-val">Ryzen Homelab Server</span></div>
+                <div class="term-row"><span class="term-key">Kernel:</span> <span class="term-val">6.x.x-zen</span></div>
+                <div class="term-row"><span class="term-key">Uptime:</span> <span class="term-val">42 days, 7 hours</span></div>
+                <div class="term-row"><span class="term-key">Shell:</span> <span class="term-val">zsh 5.9</span></div>
+                <div class="term-row"><span class="term-key">WM / DE:</span> <span class="term-val">Tiling WM + Wayland</span></div>
+                <div class="term-row"><span class="term-key">Memory:</span> <span class="term-val">32GiB ECC DDR4</span></div>
+                <div class="term-row"><span class="term-key">Storage:</span> <span class="term-val">48TB ZFS Pool</span></div>
+              </div>
+            </div>
+            <div class="term-row"><span style="color: #34d399;">micah@homelab:~$</span> <span class="term-val">echo "Ready to build"</span></div>
+            <div class="term-row"><span class="term-val">Ready to build</span></div>
+            <div class="term-prompt">
+              <span>micah@homelab:~$</span> <span>type 'help' to explore</span>
+            </div>
           </div>
+          <form class="term-input-line" id="term-form" autocomplete="off">
+            <label class="term-input-prompt" for="term-input">micah@homelab:~$</label>
+            <input id="term-input" type="text" placeholder="type 'help'" spellcheck="false" aria-label="Terminal command" />
+          </form>
         </div>
       </section>
 
@@ -1718,14 +1883,70 @@
         </div>
       </section>
 
+      <!-- Featured Spotlight: Rec Room Revival Backend -->
+      <section id="spotlight">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-tag">// 04</span> Spotlight: Rec Room Revival
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">recroom-backend.md</span>
+        </div>
+
+        <div class="spotlight card">
+          <div class="spotlight-copy">
+            <span class="project-badge active">🚧 In progress</span>
+            <h3>A from-scratch backend for Rec Room</h3>
+            <p class="project-desc">
+              The official servers won't be around forever, so I'm rebuilding the server side from the ground up — reverse-engineered from the game itself, not from docs.
+            </p>
+            <ul class="project-features">
+              <li>ASP.NET Core backend with a custom SignalR replacement for Photon</li>
+              <li>Reverse-engineered via IL2CPP analysis and Wireshark packet capture</li>
+              <li>Runs on an Oracle Cloud Ampere A1 ARM VM, game traffic over UDP 5058</li>
+              <li>Deployed with GitHub Actions CI/CD</li>
+            </ul>
+            <div class="project-tags">
+              <span class="project-tag">ASP.NET Core</span>
+              <span class="project-tag">SignalR</span>
+              <span class="project-tag">C#</span>
+              <span class="project-tag">Oracle A1 ARM</span>
+              <span class="project-tag">UDP 5058</span>
+            </div>
+          </div>
+          <div class="spotlight-diagram" role="img" aria-label="Architecture diagram: the Rec Room game client connects over SignalR and HTTP to an ASP.NET Core backend on an Oracle Ampere A1 ARM VM, deployed by GitHub Actions CI/CD.">
+            <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg">
+              <rect class="diag-box" x="30" y="10" width="300" height="52" rx="10" />
+              <text class="diag-text" x="180" y="42" text-anchor="middle">Rec Room game client</text>
+              <text class="diag-arrow" x="180" y="80" text-anchor="middle">↓ SignalR + HTTP</text>
+              <rect class="diag-box diag-accent-box" x="30" y="92" width="300" height="52" rx="10" />
+              <text class="diag-text" x="180" y="118" text-anchor="middle">ASP.NET Core backend</text>
+              <text class="diag-sub" x="180" y="136" text-anchor="middle">custom SignalR Photon replacement</text>
+              <text class="diag-arrow" x="180" y="162" text-anchor="middle">↓ runs on</text>
+              <rect class="diag-box" x="30" y="174" width="300" height="52" rx="10" />
+              <text class="diag-text" x="180" y="200" text-anchor="middle">Oracle Ampere A1 ARM VM</text>
+              <text class="diag-sub" x="180" y="218" text-anchor="middle">game traffic · UDP 5058</text>
+              <rect class="diag-box diag-dashed" x="30" y="248" width="300" height="52" rx="10" />
+              <text class="diag-text" x="180" y="274" text-anchor="middle">GitHub Actions CI/CD</text>
+              <text class="diag-sub" x="180" y="292" text-anchor="middle">build + deploy ↑</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
       <!-- Open Source Repos -->
       <section id="repos">
         <div class="section-header">
           <h2 class="section-title">
-            <span class="section-tag">// 04</span> Open Source
+            <span class="section-tag">// 05</span> Open Source
           </h2>
           <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">public_repos</span>
         </div>
+
+        <!-- Contribution graph (third-party image; hides itself if it fails to load) -->
+        <figure class="contrib-card">
+          <img src="https://ghchart.rcti.io/micahgen2" alt="Micah's GitHub contribution graph" loading="lazy" onerror="this.closest('.contrib-card').style.display='none'" />
+          <figcaption>contributions on GitHub — <a href="https://github.com/micahgen2" target="_blank" rel="noopener noreferrer">github.com/micahgen2</a></figcaption>
+        </figure>
 
         <div class="project-grid">
           <article class="project-card">
@@ -1739,6 +1960,7 @@
                 Download OS images and run them as VMs on your Mac. ARM64 guests run at near-native speed, x86_64 guests via QEMU.
               </p>
               <div class="repo-meta">Updated Nov 8, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#F05138"></span><span class="lang-name">Swift</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/vmforge" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1760,6 +1982,7 @@
                 Windows Terminal Emulator with Linux command emulation written in C# (.NET 10).
               </p>
               <div class="repo-meta">Updated Sep 5, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#178600"></span><span class="lang-name">C#</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/WinLinuxTerm" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1782,6 +2005,7 @@
                 Modern GTK4 / Libadwaita graphical package manager for Arch Linux &amp; ALPM distributions.
               </p>
               <div class="repo-meta">Updated Aug 28, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#3572A5"></span><span class="lang-name">Python</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/pacgui" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1804,6 +2028,7 @@
                 Modern, high-performance system monitor written in C# with an Avalonia desktop GUI, Spectre.Console TUI, and embedded web dashboard.
               </p>
               <div class="repo-meta">Updated Aug 13, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#178600"></span><span class="lang-name">C#</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/SysMonCSharp" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1826,6 +2051,7 @@
                 High-performance, safe USB disk image flasher for Linux supporting .iso, .img, .xz, .gz, .bz2, .zip, and .zst.
               </p>
               <div class="repo-meta">Updated Aug 22, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#3572A5"></span><span class="lang-name">Python</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/usb-flasher" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1848,6 +2074,7 @@
                 A custom Discord client, built from scratch.
               </p>
               <div class="repo-meta">Updated Aug 30, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#3178c6"></span><span class="lang-name">TypeScript</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/aethercord" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1870,6 +2097,7 @@
                 A network diagnostic battery with an attitude problem. Runs the checks you would run by hand when the internet is broken, shows the exact command and raw output, and names the layer most likely at fault.
               </p>
               <div class="repo-meta">Updated Oct 24, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#3572A5"></span><span class="lang-name">Python</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/wtfnet" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1892,6 +2120,7 @@
                 A custom, distraction-free, privacy-friendly YouTube desktop client. Ad-free via Invidious and Piped proxies, with a Zen Mode that hides recommendations, sidebars, and comments.
               </p>
               <div class="repo-meta">Updated Sep 6, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#3178c6"></span><span class="lang-name">TypeScript</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/zentube-desktop" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1914,6 +2143,7 @@
                 A modern, dark-themed custom Spotify client with direct in-browser playback via the official Spotify Web Playback SDK and zero-backend PKCE auth.
               </p>
               <div class="repo-meta">Updated Sep 2, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#3178c6"></span><span class="lang-name">TypeScript</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/aether-spotify" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1936,6 +2166,7 @@
                 Windows desktop system monitor written in C#. Live CPU, memory, disk, and network cards with sparklines, plus a process list, in a dark WinForms UI.
               </p>
               <div class="repo-meta">Updated Aug 29, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#178600"></span><span class="lang-name">C#</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/SysMon" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1958,6 +2189,7 @@
                 iOS app that finds historical App Store builds, downloads authentic .ipa files directly from Apple CDN servers, and installs them on-device with no computer needed.
               </p>
               <div class="repo-meta">Updated Aug 18, 2026 · ★ 0</div>
+              <div class="repo-lang"><span class="lang-dot" style="background:#F05138"></span><span class="lang-name">Swift</span></div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/LegacyAppInstaller" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1992,11 +2224,54 @@
         </div>
       </section>
 
+      <!-- Timeline -->
+      <section id="timeline">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-tag">// 06</span> How I Got Here
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">history.log</span>
+        </div>
+
+        <ol class="timeline">
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <span class="timeline-when">ongoing</span>
+            <h3>Mainline Linux kernel patches</h3>
+            <p>Patches accepted upstream for the HP ProBook 450 G8 — audio, Bluetooth, and battery fixes, now part of the kernel.</p>
+          </li>
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <span class="timeline-when">ongoing</span>
+            <h3>Nintendo DS emulator, from scratch</h3>
+            <p>CPU and PPU done, audio/SPU in progress. Building a handheld emulator one component at a time.</p>
+          </li>
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <span class="timeline-when">in progress</span>
+            <h3>Rec Room revival backend</h3>
+            <p>A from-scratch ASP.NET Core backend replacing Photon, reverse-engineered from the game itself.</p>
+          </li>
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <span class="timeline-when">ongoing</span>
+            <h3>Homelab build</h3>
+            <p>Ryzen server, 32GB ECC RAM, 48TB encrypted ZFS pool — self-hosting everything that matters.</p>
+          </li>
+          <li class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <span class="timeline-when">Nov 1, 2026</span>
+            <h3>Windows + CachyOS dual boot</h3>
+            <p>Windows for the anti-cheat games, Linux for everything else. Both on one drive, GRUB in charge.</p>
+          </li>
+        </ol>
+      </section>
+
       <!-- Homelab Architecture & Services -->
       <section id="homelab">
         <div class="section-header">
           <h2 class="section-title">
-            <span class="section-tag">// 05</span> Homelab Topology
+            <span class="section-tag">// 07</span> Homelab Topology
           </h2>
           <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">status: self-hosted</span>
         </div>
@@ -2014,38 +2289,120 @@
             </div>
           </div>
 
-          <div class="service-grid">
-            <div class="service-tile">
-              <div class="service-icon">🐙</div>
-              <div class="service-info">
-                <h4>Private Git</h4>
-                <p>Self-hosted repos & webhooks</p>
-              </div>
-            </div>
+          <!-- Live status panel: hidden until STATUS_ENDPOINT (bottom of page) is set
+               to a public HTTPS URL and the fetch succeeds. No fake status is ever shown. -->
+          <div class="status-panel" id="status-panel" hidden>
+            <span class="status-pill"><span class="status-dot"></span><span id="live-uptime-text">fetching live status…</span></span>
+            <span class="status-note" id="live-host-text"></span>
+          </div>
 
-            <div class="service-tile">
-              <div class="service-icon">💽</div>
-              <div class="service-info">
-                <h4>ZFS Storage</h4>
-                <p>RAID-Z arrays & scrub jobs</p>
-              </div>
+          <div class="rack-wrap">
+            <div class="rack" role="list" aria-label="Homelab rack">
+              <button type="button" class="rack-unit" role="listitem" data-unit="ryzen" data-service="" aria-pressed="true">
+                <span class="rack-leds" aria-hidden="true"><span class="led"></span><span class="led led-amber"></span></span>
+                <span class="rack-name">🖥️ Ryzen Server</span>
+                <span class="rack-sub">48TB ZFS · 32GB ECC</span>
+                <span class="rack-status"></span>
+              </button>
+              <button type="button" class="rack-unit" role="listitem" data-unit="zfs" data-service="" aria-pressed="false">
+                <span class="rack-leds" aria-hidden="true"><span class="led"></span><span class="led led-amber"></span></span>
+                <span class="rack-name">💽 ZFS Storage</span>
+                <span class="rack-sub">RAID-Z · scrubs</span>
+                <span class="rack-status"></span>
+              </button>
+              <button type="button" class="rack-unit" role="listitem" data-unit="wireguard" data-service="" aria-pressed="false">
+                <span class="rack-leds" aria-hidden="true"><span class="led"></span><span class="led led-amber"></span></span>
+                <span class="rack-name">🛡️ WireGuard</span>
+                <span class="rack-sub">encrypted mesh</span>
+                <span class="rack-status"></span>
+              </button>
+              <button type="button" class="rack-unit" role="listitem" data-unit="caddy" data-service="Caddy" aria-pressed="false">
+                <span class="rack-leds" aria-hidden="true"><span class="led"></span><span class="led led-amber"></span></span>
+                <span class="rack-name">🚦 Reverse Proxy</span>
+                <span class="rack-sub">Caddy · TLS</span>
+                <span class="rack-status"></span>
+              </button>
+              <button type="button" class="rack-unit" role="listitem" data-unit="git" data-service="" aria-pressed="false">
+                <span class="rack-leds" aria-hidden="true"><span class="led"></span><span class="led led-amber"></span></span>
+                <span class="rack-name">🐙 Private Git</span>
+                <span class="rack-sub">repos + webhooks</span>
+                <span class="rack-status"></span>
+              </button>
             </div>
+            <div class="rack-detail card">
+              <h4 id="rack-detail-title">Ryzen Server</h4>
+              <p id="rack-detail-text">The heart of the homelab — main compute and storage node.</p>
+              <div class="rack-specs" id="rack-detail-specs">Ryzen CPU · 32GB ECC RAM · 48TB encrypted ZFS pool</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <div class="service-tile">
-              <div class="service-icon">🛡️</div>
-              <div class="service-info">
-                <h4>WireGuard</h4>
-                <p>Encrypted mesh tunnel</p>
-              </div>
-            </div>
+      <!-- Build Log -->
+      <section id="buildlog">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-tag">// 08</span> Build Log
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">build.log</span>
+        </div>
+        <p class="section-note">$ tail -f build.log &nbsp;— short factual log. Edit these entries in index.html to add more.</p>
+        <div class="buildlog-list">
+          <article class="buildlog-entry">
+            <h3>Kernel patches accepted upstream <span class="buildlog-status">merged</span></h3>
+            <p>Mainline Linux patches for the HP ProBook 450 G8 — audio, Bluetooth, and battery fixes.</p>
+          </article>
+          <article class="buildlog-entry">
+            <h3>DS emulator: CPU + PPU done <span class="buildlog-status">in progress</span></h3>
+            <p>Nintendo DS emulator built from scratch. CPU and PPU are complete; audio/SPU is next.</p>
+          </article>
+          <article class="buildlog-entry">
+            <h3>Rec Room backend: Photon replacement <span class="buildlog-status">in progress</span></h3>
+            <p>From-scratch ASP.NET Core backend with custom SignalR, reverse-engineered via IL2CPP and Wireshark.</p>
+          </article>
+        </div>
+      </section>
 
-            <div class="service-tile">
-              <div class="service-icon">🚦</div>
-              <div class="service-info">
-                <h4>Reverse Proxy</h4>
-                <p>Caddy SSL & rate limits</p>
-              </div>
-            </div>
+      <!-- Uses -->
+      <section id="uses">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="section-tag">// 09</span> Uses
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">uses.md</span>
+        </div>
+        <div class="uses-grid">
+          <div class="uses-card">
+            <h3>lab · HP ProBook 450 G8</h3>
+            <p>The lab machine. Custom kernels, kexec, reinstalls — Secure Boot off, nothing is sacred here.</p>
+            <ul>
+              <li>CachyOS / Arch</li>
+              <li>Custom-built kernels</li>
+            </ul>
+          </div>
+          <div class="uses-card">
+            <h3>stability · Ubuntu box</h3>
+            <p>The separate Ubuntu machine. Secure Boot on, simply not allowed to have problems.</p>
+            <ul>
+              <li>Ubuntu</li>
+              <li>Secure Boot on</li>
+            </ul>
+          </div>
+          <div class="uses-card">
+            <h3>editors</h3>
+            <p>Where the code happens.</p>
+            <ul>
+              <li>Neovim</li>
+              <li>Rider</li>
+            </ul>
+          </div>
+          <div class="uses-card">
+            <h3>shell</h3>
+            <p>Terminal-first workflow.</p>
+            <ul>
+              <li>Zsh + Tmux</li>
+              <li>Tiling WM + Wayland</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -2054,7 +2411,7 @@
       <section id="facts">
         <div class="section-header">
           <h2 class="section-title">
-            <span class="section-tag">// 06</span> Quick Facts & Thoughts
+            <span class="section-tag">// 10</span> Quick Facts & Thoughts
           </h2>
           <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">trivia.txt</span>
         </div>
@@ -2133,6 +2490,7 @@
 
     <!-- Footer -->
     <footer>
+      <div class="footer-cat" title="the portal cat approves" aria-hidden="true"><svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="3" height="3" fill="#232f4a" /><rect x="33" y="0" width="3" height="3" fill="#232f4a" /><rect x="0" y="3" width="3" height="3" fill="#232f4a" /><rect x="3" y="3" width="3" height="3" fill="#232f4a" /><rect x="30" y="3" width="3" height="3" fill="#232f4a" /><rect x="33" y="3" width="3" height="3" fill="#232f4a" /><rect x="0" y="6" width="3" height="3" fill="#232f4a" /><rect x="3" y="6" width="3" height="3" fill="#232f4a" /><rect x="6" y="6" width="3" height="3" fill="#232f4a" /><rect x="9" y="6" width="3" height="3" fill="#232f4a" /><rect x="12" y="6" width="3" height="3" fill="#232f4a" /><rect x="15" y="6" width="3" height="3" fill="#232f4a" /><rect x="18" y="6" width="3" height="3" fill="#232f4a" /><rect x="21" y="6" width="3" height="3" fill="#232f4a" /><rect x="24" y="6" width="3" height="3" fill="#232f4a" /><rect x="27" y="6" width="3" height="3" fill="#232f4a" /><rect x="30" y="6" width="3" height="3" fill="#232f4a" /><rect x="33" y="6" width="3" height="3" fill="#232f4a" /><rect x="0" y="9" width="3" height="3" fill="#232f4a" /><rect x="3" y="9" width="3" height="3" fill="#232f4a" /><rect x="6" y="9" width="3" height="3" fill="#232f4a" /><rect x="9" y="9" width="3" height="3" fill="#232f4a" /><rect x="12" y="9" width="3" height="3" fill="#232f4a" /><rect x="15" y="9" width="3" height="3" fill="#232f4a" /><rect x="18" y="9" width="3" height="3" fill="#232f4a" /><rect x="21" y="9" width="3" height="3" fill="#232f4a" /><rect x="24" y="9" width="3" height="3" fill="#232f4a" /><rect x="27" y="9" width="3" height="3" fill="#232f4a" /><rect x="30" y="9" width="3" height="3" fill="#232f4a" /><rect x="33" y="9" width="3" height="3" fill="#232f4a" /><rect x="0" y="12" width="3" height="3" fill="#232f4a" /><rect x="3" y="12" width="3" height="3" fill="#232f4a" /><rect x="6" y="12" width="3" height="3" fill="#232f4a" /><rect x="9" y="12" width="3" height="3" fill="#232f4a" /><rect x="12" y="12" width="3" height="3" fill="#232f4a" /><rect x="15" y="12" width="3" height="3" fill="#232f4a" /><rect x="18" y="12" width="3" height="3" fill="#232f4a" /><rect x="21" y="12" width="3" height="3" fill="#232f4a" /><rect x="24" y="12" width="3" height="3" fill="#232f4a" /><rect x="27" y="12" width="3" height="3" fill="#232f4a" /><rect x="30" y="12" width="3" height="3" fill="#232f4a" /><rect x="33" y="12" width="3" height="3" fill="#232f4a" /><rect x="0" y="15" width="3" height="3" fill="#232f4a" /><rect x="3" y="15" width="3" height="3" fill="#232f4a" /><rect x="6" y="15" width="3" height="3" fill="#232f4a" /><rect x="9" y="15" width="3" height="3" fill="#232f4a" /><rect x="12" y="15" width="3" height="3" fill="#232f4a" /><rect x="15" y="15" width="3" height="3" fill="#232f4a" /><rect x="18" y="15" width="3" height="3" fill="#232f4a" /><rect x="21" y="15" width="3" height="3" fill="#232f4a" /><rect x="24" y="15" width="3" height="3" fill="#232f4a" /><rect x="27" y="15" width="3" height="3" fill="#232f4a" /><rect x="30" y="15" width="3" height="3" fill="#232f4a" /><rect x="33" y="15" width="3" height="3" fill="#232f4a" /><rect x="3" y="18" width="3" height="3" fill="#232f4a" /><rect x="6" y="18" width="3" height="3" fill="#232f4a" /><rect x="9" y="18" width="3" height="3" fill="#232f4a" /><rect x="12" y="18" width="3" height="3" fill="#232f4a" /><rect x="15" y="18" width="3" height="3" fill="#232f4a" /><rect x="18" y="18" width="3" height="3" fill="#232f4a" /><rect x="21" y="18" width="3" height="3" fill="#232f4a" /><rect x="24" y="18" width="3" height="3" fill="#232f4a" /><rect x="27" y="18" width="3" height="3" fill="#232f4a" /><rect x="30" y="18" width="3" height="3" fill="#232f4a" /><rect x="3" y="21" width="3" height="3" fill="#232f4a" /><rect x="6" y="21" width="3" height="3" fill="#232f4a" /><rect x="9" y="21" width="3" height="3" fill="#232f4a" /><rect x="12" y="21" width="3" height="3" fill="#232f4a" /><rect x="15" y="21" width="3" height="3" fill="#232f4a" /><rect x="18" y="21" width="3" height="3" fill="#232f4a" /><rect x="21" y="21" width="3" height="3" fill="#232f4a" /><rect x="24" y="21" width="3" height="3" fill="#232f4a" /><rect x="27" y="21" width="3" height="3" fill="#232f4a" /><rect x="30" y="21" width="3" height="3" fill="#232f4a" /><rect x="3" y="24" width="3" height="3" fill="#232f4a" /><rect x="6" y="24" width="3" height="3" fill="#232f4a" /><rect x="9" y="24" width="3" height="3" fill="#232f4a" /><rect x="12" y="24" width="3" height="3" fill="#232f4a" /><rect x="15" y="24" width="3" height="3" fill="#232f4a" /><rect x="18" y="24" width="3" height="3" fill="#232f4a" /><rect x="21" y="24" width="3" height="3" fill="#232f4a" /><rect x="24" y="24" width="3" height="3" fill="#232f4a" /><rect x="27" y="24" width="3" height="3" fill="#232f4a" /><rect x="30" y="24" width="3" height="3" fill="#232f4a" /><rect x="6" y="27" width="3" height="3" fill="#232f4a" /><rect x="9" y="27" width="3" height="3" fill="#232f4a" /><rect x="12" y="27" width="3" height="3" fill="#232f4a" /><rect x="15" y="27" width="3" height="3" fill="#232f4a" /><rect x="18" y="27" width="3" height="3" fill="#232f4a" /><rect x="21" y="27" width="3" height="3" fill="#232f4a" /><rect x="24" y="27" width="3" height="3" fill="#232f4a" /><rect x="27" y="27" width="3" height="3" fill="#232f4a" /><rect x="3" y="30" width="3" height="3" fill="#232f4a" /><rect x="6" y="30" width="3" height="3" fill="#232f4a" /><rect x="9" y="30" width="3" height="3" fill="#232f4a" /><rect x="12" y="30" width="3" height="3" fill="#232f4a" /><rect x="15" y="30" width="3" height="3" fill="#232f4a" /><rect x="18" y="30" width="3" height="3" fill="#232f4a" /><rect x="21" y="30" width="3" height="3" fill="#232f4a" /><rect x="24" y="30" width="3" height="3" fill="#232f4a" /><rect x="27" y="30" width="3" height="3" fill="#232f4a" /><rect x="30" y="30" width="3" height="3" fill="#232f4a" /><rect x="6" y="33" width="3" height="3" fill="#232f4a" /><rect x="9" y="33" width="3" height="3" fill="#232f4a" /><rect x="12" y="33" width="3" height="3" fill="#232f4a" /><rect x="15" y="33" width="3" height="3" fill="#232f4a" /><rect x="18" y="33" width="3" height="3" fill="#232f4a" /><rect x="21" y="33" width="3" height="3" fill="#232f4a" /><rect x="24" y="33" width="3" height="3" fill="#232f4a" /><rect x="27" y="33" width="3" height="3" fill="#232f4a" /><rect x="9" y="12" width="3" height="3" fill="#38bdf8" /><rect x="24" y="12" width="3" height="3" fill="#38bdf8" /></svg></div>
       <p>&copy; <span id="current-year">2026</span> Micah Gentry. All rights reserved.</p>
       <p>Last updated November 2026.</p>
       <div class="footer-badge">
@@ -2153,6 +2511,65 @@
     // =========================================================================
     // TERMINAL WIDGET LOGIC
     // =========================================================================
+    // --- PURE TERMINAL LOGIC (no DOM access; unit-tested in Node) ---
+    const TERM_HELP = [
+      "available commands:",
+      "  neofetch   — system summary",
+      "  whoami     — who is micah",
+      "  services   — what the homelab runs",
+      "  hobbies    — off-duty stuff",
+      "  projects   — featured projects",
+      "  repos      — featured open-source repos",
+      "  contact    — how to reach micah",
+      "  sudo       — try it",
+      "  portal     — ???",
+      "  clear      — clear the terminal",
+      "  help       — show this list"
+    ].join("\n");
+
+    const TERM_PROJECTS = [
+      "featured projects:",
+      "  Game Mechanics & Sandboxes — Unity + C# + Lua (private repos for now)",
+      "  Rec Room Revival — from-scratch backend replacing Photon (see Spotlight)",
+      "  Private Homelab & Storage Node — 48TB encrypted ZFS pool",
+      "  Automation & System Utilities — wtfnet + usb-flasher",
+      "  Arch Linux Workstation Config — dotfiles + pacgui"
+    ].join("\n");
+
+    const TERM_REPOS = [
+      "featured repos (github.com/micahgen2):",
+      "  vmforge, WinLinuxTerm, pacgui, SysMonCSharp, usb-flasher,",
+      "  aethercord, wtfnet, zentube-desktop, aether-spotify,",
+      "  SysMon, LegacyAppInstaller",
+      "star counts + updated dates update live on the cards below."
+    ].join("\n");
+
+    const TERM_CONTACT = [
+      "email:   micah@patrick-gentry.net",
+      "discord: @micahgen2",
+      "github:  github.com/micahgen2"
+    ].join("\n");
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    // Returns the HTML to print, or null for `clear`.
+    function termResponse(cmd) {
+      const c = String(cmd).trim().toLowerCase();
+      if (c === "") return "";
+      if (c === "clear") return null;
+      if (c === "neofetch" || c === "whoami" || c === "services" || c === "hobbies") return terminalData[c];
+      if (c === "help") return '<div class="term-out" style="white-space: pre-wrap;">' + TERM_HELP + "</div>";
+      if (c === "projects") return '<div class="term-out" style="white-space: pre-wrap;">' + TERM_PROJECTS + "</div>";
+      if (c === "repos") return '<div class="term-out" style="white-space: pre-wrap;">' + TERM_REPOS + "</div>";
+      if (c === "contact") return '<div class="term-out" style="white-space: pre-wrap;">' + TERM_CONTACT + "</div>";
+      if (c === "sudo") return '<div class="term-out">micah is not in the sudoers file. This incident will be reported to Micah.</div>';
+      if (c === "portal") return "<div class=\"term-out\">The cake is a lie.<br>Now you\"re thinking with portals.</div>";
+      return '<div class="term-out">command not found: ' + escapeHtml(cmd.trim()) + " — type 'help'</div>";
+    }
+    // --- END PURE TERMINAL LOGIC ---
+
     const terminalData = {
       neofetch: `
         <div style="display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap;">
@@ -2223,23 +2640,52 @@
       `
     };
 
-    function switchTermTab(tabName) {
-      // Update Tab button active state
-      document.querySelectorAll('.term-tab').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.textContent.trim() === tabName) {
-          btn.classList.add('active');
-        }
-      });
+    // Terminal DOM wiring — tabs run the matching command, the input line
+    // runs anything the visitor types. Output scrolls like a real terminal.
+    const termBody = document.getElementById('terminal-content');
+    const termInput = document.getElementById('term-input');
+    const termForm = document.getElementById('term-form');
 
-      // Inject Content
-      const container = document.getElementById('terminal-content');
-      if (terminalData[tabName]) {
-        container.innerHTML = terminalData[tabName];
-      }
+    function termPrint(html) {
+      if (!html) return;
+      termBody.insertAdjacentHTML('beforeend', html);
+      termBody.scrollTop = termBody.scrollHeight;
     }
 
-    // Initialize Default Tab
+    function execTermCommand(rawCmd) {
+      const cmd = rawCmd.trim();
+      if (!cmd) return;
+      termPrint('<div class="term-row"><span style="color: #34d399;">micah@homelab:~$</span> <span class="term-val">' + escapeHtml(cmd) + '</span></div>');
+      const out = termResponse(cmd);
+      if (out === null) { termBody.innerHTML = ''; return; }
+      termPrint(out);
+    }
+
+    function switchTermTab(tabName) {
+      document.querySelectorAll('.term-tab').forEach(function (btn) {
+        btn.classList.toggle('active', btn.textContent.trim() === tabName);
+      });
+      termBody.innerHTML = '';
+      const out = termResponse(tabName);
+      if (out) termPrint(out);
+      if (termInput) termInput.focus({ preventScroll: true });
+    }
+
+    if (termForm) {
+      termForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        execTermCommand(termInput.value);
+        termInput.value = '';
+        termInput.focus();
+      });
+    }
+
+    const termCard = document.querySelector('.terminal-card');
+    if (termCard && termInput) {
+      termCard.addEventListener('click', function () { termInput.focus(); });
+    }
+
+    // Initialize Default Tab (replaces the static no-JS fallback content)
     switchTermTab('neofetch');
 
     // =========================================================================
@@ -2267,32 +2713,60 @@
     // =========================================================================
     // ACCENT COLOR THEME PICKER & LOCALSTORAGE
     // =========================================================================
-    const themeButtons = document.querySelectorAll('.theme-btn');
+    const THEME_NAMES = { default: 'Cyan', emerald: 'Emerald', violet: 'Violet', amber: 'Amber', rose: 'Rose' };
+    const THEME_HEX = { default: '#38bdf8', emerald: '#10b981', violet: '#a855f7', amber: '#f59e0b', rose: '#f43f5e' };
+    const themePickerBtn = document.getElementById('theme-picker-btn');
+    const themeMenu = document.getElementById('theme-menu');
+    const themeNameEl = document.getElementById('theme-name');
+    const themeDotEl = document.getElementById('theme-dot');
     const savedTheme = localStorage.getItem('micah_theme') || 'default';
 
     function applyTheme(theme) {
+      if (!THEME_NAMES[theme]) theme = 'default';
       if (theme === 'default') {
         document.documentElement.removeAttribute('data-theme');
       } else {
         document.documentElement.setAttribute('data-theme', theme);
       }
-      
-      themeButtons.forEach(btn => {
-        if (btn.getAttribute('data-theme-set') === theme) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
+      document.querySelectorAll('.theme-option').forEach(function (opt) {
+        const isActive = opt.getAttribute('data-theme-set') === theme;
+        opt.classList.toggle('active', isActive);
+        const check = opt.querySelector('.theme-check');
+        if (check) check.textContent = isActive ? '✓' : '';
       });
+      if (themeNameEl) themeNameEl.textContent = THEME_NAMES[theme];
+      if (themeDotEl) themeDotEl.style.background = THEME_HEX[theme];
       localStorage.setItem('micah_theme', theme);
     }
 
-    themeButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const theme = btn.getAttribute('data-theme-set');
-        applyTheme(theme);
+    if (themePickerBtn && themeMenu) {
+      themePickerBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const open = themeMenu.hidden;
+        themeMenu.hidden = !open;
+        themePickerBtn.setAttribute('aria-expanded', String(open));
       });
-    });
+      themeMenu.querySelectorAll('.theme-option').forEach(function (opt) {
+        opt.addEventListener('click', function () {
+          applyTheme(opt.getAttribute('data-theme-set'));
+          themeMenu.hidden = true;
+          themePickerBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+      document.addEventListener('click', function (e) {
+        if (!themeMenu.hidden && !e.target.closest('#theme-picker')) {
+          themeMenu.hidden = true;
+          themePickerBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !themeMenu.hidden) {
+          themeMenu.hidden = true;
+          themePickerBtn.setAttribute('aria-expanded', 'false');
+          themePickerBtn.focus();
+        }
+      });
+    }
 
     applyTheme(savedTheme);
 
@@ -2307,6 +2781,9 @@
     // fallback: if this fetch fails, rate-limits, or the visitor is offline,
     // nothing on the page changes.
     // =========================================================================
+    // GitHub language colors (linguist palette, subset)
+    const LANG_COLORS = { 'C#': '#178600', 'Python': '#3572A5', 'TypeScript': '#3178c6', 'Swift': '#F05138', 'Lua': '#000080', 'JavaScript': '#f1e05a', 'HTML': '#e34c26', 'CSS': '#563d7c', 'Shell': '#89e051', 'Go': '#00ADD8', 'Rust': '#dea584', 'C++': '#f34b7d', 'C': '#555555', 'Java': '#b07219', 'Kotlin': '#A97BFF', 'Ruby': '#701516' };
+
     (function refreshGitHubStats() {
       fetch('https://api.github.com/users/micahgen2/repos?per_page=100')
         .then(function (res) {
@@ -2330,6 +2807,15 @@
               month: 'short', day: 'numeric', year: 'numeric'
             });
             meta.textContent = 'Updated ' + formatted + ' \u00b7 \u2605 ' + repo.stargazers_count;
+
+            // Primary language dot + name, from the same API response.
+            var langEl = card.querySelector('.repo-lang');
+            if (langEl && repo.language) {
+              var dot = langEl.querySelector('.lang-dot');
+              var label = langEl.querySelector('.lang-name');
+              if (dot) dot.style.background = LANG_COLORS[repo.language] || '#8b949e';
+              if (label) label.textContent = repo.language;
+            }
           });
 
           // Count only his own repos, not forks (matches the static "14").
@@ -2344,6 +2830,307 @@
         .catch(function (err) {
           console.warn('Live GitHub stats unavailable, keeping static values.', err);
         });
+    })();
+
+    // =========================================================================
+    // LIVE STATUS — Micah's own PC uptime + service checks (optional)
+    // STATUS_ENDPOINT: public HTTPS URL of the uptime endpoint (no trailing
+    // slash, no /uptime path), e.g. "https://uptime.yourdomain.net".
+    // Leave it "" (disabled) until the endpoint is running on Micah's PC and
+    // exposed over HTTPS (Cloudflare Tunnel or Caddy — see the endpoint
+    // README in workspace/your_files/uptime-endpoint/). When disabled or
+    // unreachable, the site silently shows the static homelab list with no
+    // live data. No fake status is ever shown. The number is the PC's
+    // uptime, not the homelab server's.
+    // To add a status source later (e.g. Uptime Kuma), point STATUS_ENDPOINT
+    // at any service that answers GET /uptime with the same JSON shape.
+    // =========================================================================
+    const STATUS_ENDPOINT = '';
+
+    // --- PURE STATUS LOGIC (no DOM access; unit-tested in Node) ---
+    function renderLiveStatus(data) {
+      const uptime = (data && data.uptime) ? String(data.uptime) : null;
+      const host = (data && data.hostname) ? String(data.hostname) : '';
+      const os = (data && data.os) ? String(data.os) : '';
+      const osRel = (data && data.os_release) ? String(data.os_release) : '';
+      const label = uptime ? ('pc uptime: ' + uptime) : null;
+      const sub = [host, os, osRel].filter(Boolean).join(' · ');
+      const services = Array.isArray(data && data.services) ? data.services.map(function (svc) {
+        return { name: String(svc.name || ''), status: svc.status === 'up' ? 'up' : 'down', latency_ms: (typeof svc.latency_ms === 'number') ? svc.latency_ms : null };
+      }) : [];
+      return { label: label, sub: sub, services: services };
+    }
+    // --- END PURE STATUS LOGIC ---
+
+    (function fetchLiveStatus() {
+      if (!STATUS_ENDPOINT) return;
+      const base = STATUS_ENDPOINT.endsWith('/') ? STATUS_ENDPOINT.slice(0, -1) : STATUS_ENDPOINT;
+      fetch(base + '/uptime')
+        .then(function (res) { if (!res.ok) throw new Error('status ' + res.status); return res.json(); })
+        .then(function (data) {
+          if (!data || data.status !== 'ok') return;
+          const live = renderLiveStatus(data);
+          if (!live.label) return;
+          const panel = document.getElementById('status-panel');
+          const uptimeText = document.getElementById('live-uptime-text');
+          const hostText = document.getElementById('live-host-text');
+          if (!panel || !uptimeText) return;
+          uptimeText.textContent = live.label;
+          if (hostText) hostText.textContent = live.sub;
+          panel.hidden = false;
+          live.services.forEach(function (svc) {
+            document.querySelectorAll('.rack-unit').forEach(function (unit) {
+              if ((unit.getAttribute('data-service') || '') === svc.name) {
+                const slot = unit.querySelector('.rack-status');
+                if (slot) {
+                  slot.innerHTML = '<span class="' + svc.status + '">● ' + svc.status + (svc.latency_ms !== null ? ' · ' + svc.latency_ms + 'ms' : '') + '</span>';
+                }
+              }
+            });
+          });
+        })
+        .catch(function (err) { console.warn('Live status unavailable, keeping static homelab list.', err); });
+    })();
+
+    // =========================================================================
+    // HERO TAGLINE TYPING EFFECT
+    // =========================================================================
+    (function typeRoles() {
+      const el = document.getElementById('role-typer');
+      if (!el) return;
+      const roles = ['dev // sysadmin // builder', 'kernel hacker', 'homelabber', 'game dev'];
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = roles[0]; return; }
+      let roleIdx = 0, charIdx = roles[0].length, deleting = true;
+      function tick() {
+        if (deleting) {
+          charIdx--;
+          el.textContent = roles[roleIdx].slice(0, charIdx);
+          if (charIdx === 0) { deleting = false; roleIdx = (roleIdx + 1) % roles.length; setTimeout(tick, 350); return; }
+          setTimeout(tick, 35);
+        } else {
+          charIdx++;
+          el.textContent = roles[roleIdx].slice(0, charIdx);
+          if (charIdx === roles[roleIdx].length) { deleting = true; setTimeout(tick, 2200); return; }
+          setTimeout(tick, 55);
+        }
+      }
+      setTimeout(tick, 2200);
+    })();
+
+    // =========================================================================
+    // CRT MODE TOGGLE (persisted in localStorage)
+    // =========================================================================
+    (function crtMode() {
+      const btn = document.getElementById('crt-toggle');
+      const overlay = document.getElementById('crt-overlay');
+      if (!btn || !overlay) return;
+      const saved = localStorage.getItem('micah_crt') === '1';
+      function applyCRT(on) {
+        document.documentElement.classList.toggle('crt', on);
+        overlay.hidden = !on;
+        btn.setAttribute('aria-pressed', String(on));
+        localStorage.setItem('micah_crt', on ? '1' : '0');
+      }
+      btn.addEventListener('click', function () { applyCRT(!document.documentElement.classList.contains('crt')); });
+      applyCRT(saved);
+    })();
+
+    // =========================================================================
+    // BOOT SEQUENCE — quick GRUB/BIOS-style lines, ~1s, skippable, never blocks
+    // =========================================================================
+    (function bootSequence() {
+      const screen = document.getElementById('boot-screen');
+      const pre = document.getElementById('boot-lines');
+      if (!screen || !pre) return;
+      function finish() {
+        if (!screen.parentNode) return;
+        screen.classList.add('done');
+        setTimeout(function () { if (screen.parentNode) screen.parentNode.removeChild(screen); }, 300);
+      }
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { finish(); return; }
+      const lines = [
+        'sudoOS boot v2.6.17 — micah@homelab',
+        '[  OK  ] mounted /dev/zfs/pool (48TB, encrypted)',
+        '[  OK  ] reached target network-online.target',
+        '[  OK  ] started caddy.service — reverse proxy',
+        '[  OK  ] started wireguard.service — mesh vpn',
+        '[  OK  ] reached target graphical interface',
+        '',
+        'starting micahgen2.github.io ...'
+      ];
+      let i = 0, done = false;
+      const iv = setInterval(function () {
+        if (i >= lines.length) { clearInterval(iv); setTimeout(finish, 250); return; }
+        pre.textContent += lines[i] + "\n";
+        i++;
+      }, 90);
+      const skip = function () {
+        if (done) return;
+        done = true;
+        clearInterval(iv);
+        finish();
+      };
+      screen.addEventListener('click', skip);
+      document.addEventListener('keydown', skip, { once: true });
+      setTimeout(skip, 2500); // hard cap: never block content
+    })();
+
+    // =========================================================================
+    // SCROLL REVEAL (IntersectionObserver, subtle)
+    // =========================================================================
+    (function revealOnScroll() {
+      const targets = document.querySelectorAll('main section, .project-card, .fact-card, .stack-category, .uses-card, .buildlog-entry, .timeline-item');
+      if (!targets.length) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+        targets.forEach(function (el) { el.classList.add('revealed'); });
+        return;
+      }
+      targets.forEach(function (el) { el.classList.add('reveal'); });
+      const io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('revealed'); io.unobserve(entry.target); }
+        });
+      }, { threshold: 0.08 });
+      targets.forEach(function (el) { io.observe(el); });
+    })();
+
+    // =========================================================================
+    // HERO NETWORK CANVAS — drifting nodes = homelab services
+    // =========================================================================
+    (function heroNet() {
+      const canvas = document.getElementById('hero-net');
+      if (!canvas || !canvas.getContext) return;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const ctx = canvas.getContext('2d');
+      const labels = ['caddy', 'git', 'zfs', 'wireguard', 'docker', 'vpn', 'nas', 'proxy'];
+      let nodes = [], raf = null, w = 0, h = 0, accent = '56, 189, 248';
+      function readAccent() {
+        accent = (getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb') || '56, 189, 248').trim();
+      }
+      function resize() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = rect.width; h = rect.height;
+        canvas.width = Math.max(1, Math.floor(w * dpr));
+        canvas.height = Math.max(1, Math.floor(h * dpr));
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function seed() {
+        nodes = labels.map(function (label) {
+          return { x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25, label: label };
+        });
+      }
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        nodes.forEach(function (n) {
+          nodes.forEach(function (m) {
+            const dx = n.x - m.x, dy = n.y - m.y, d = Math.hypot(dx, dy);
+            if (d > 0 && d < 130) {
+              ctx.strokeStyle = 'rgba(' + accent + ',' + (0.14 * (1 - d / 130)).toFixed(3) + ')';
+              ctx.lineWidth = 1;
+              ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y); ctx.stroke();
+            }
+          });
+        });
+        ctx.font = '10px JetBrains Mono, monospace';
+        nodes.forEach(function (n) {
+          ctx.fillStyle = 'rgba(' + accent + ',0.9)';
+          ctx.beginPath(); ctx.arc(n.x, n.y, 2.2, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = 'rgba(148, 163, 184, 0.55)';
+          ctx.fillText(n.label, n.x + 7, n.y + 3);
+        });
+      }
+      function step() {
+        nodes.forEach(function (n) {
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+          if (n.y < 0 || n.y > h) n.vy *= -1;
+        });
+        draw();
+        raf = requestAnimationFrame(step);
+      }
+      function start() {
+        if (raf) return;
+        readAccent(); resize(); seed(); draw();
+        if (!reduceMotion) raf = requestAnimationFrame(step);
+      }
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+        else { start(); }
+      });
+      window.addEventListener('resize', function () { resize(); draw(); });
+      start();
+    })();
+
+    // =========================================================================
+    // HOMELAB RACK — click a unit to see its specs
+    // =========================================================================
+    (function rackDetail() {
+      const units = document.querySelectorAll('.rack-unit');
+      const title = document.getElementById('rack-detail-title');
+      const text = document.getElementById('rack-detail-text');
+      const specs = document.getElementById('rack-detail-specs');
+      if (!units.length || !title || !text) return;
+      const DETAILS = {
+        ryzen: { title: 'Ryzen Server', text: 'The heart of the homelab — main compute and storage node.', specs: 'Ryzen CPU · 32GB ECC RAM · 48TB encrypted ZFS pool' },
+        zfs: { title: 'ZFS Storage', text: 'Redundant storage pools with automated encrypted snapshots.', specs: 'RAID-Z arrays · scrub jobs · encrypted snapshots' },
+        wireguard: { title: 'WireGuard', text: 'Encrypted mesh tunnel for reaching the homelab from anywhere.', specs: 'UDP mesh · key-based auth' },
+        caddy: { title: 'Reverse Proxy — Caddy', text: 'Front door for every service: TLS, routing, and rate limits.', specs: 'Automatic TLS · reverse proxy · rate limits' },
+        git: { title: 'Private Git', text: 'Self-hosted repos and webhooks — code stays on his own disks.', specs: 'Self-hosted repos · webhooks' }
+      };
+      function select(unit) {
+        units.forEach(function (u) { u.setAttribute('aria-pressed', u === unit ? 'true' : 'false'); });
+        const d = DETAILS[unit.getAttribute('data-unit')];
+        if (d) { title.textContent = d.title; text.textContent = d.text; if (specs) specs.textContent = d.specs; }
+      }
+      units.forEach(function (unit) {
+        unit.addEventListener('click', function () { select(unit); });
+      });
+      select(units[0]);
+    })();
+
+    // =========================================================================
+    // FILE-TREE NAV — slide-over on mobile, active-section highlight
+    // =========================================================================
+    (function fileTree() {
+      const tree = document.getElementById('file-tree');
+      const burger = document.getElementById('hamburger');
+      const backdrop = document.getElementById('tree-backdrop');
+      if (!tree) return;
+      function closeTree() {
+        tree.classList.remove('open');
+        if (backdrop) backdrop.hidden = true;
+        if (burger) burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+      function openTree() {
+        tree.classList.add('open');
+        if (backdrop) backdrop.hidden = false;
+        if (burger) burger.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+      if (burger) burger.addEventListener('click', function () {
+        if (tree.classList.contains('open')) closeTree(); else openTree();
+      });
+      if (backdrop) backdrop.addEventListener('click', closeTree);
+      tree.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', closeTree);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeTree();
+      });
+      const links = Array.prototype.slice.call(tree.querySelectorAll('a[href^="#"]'));
+      const sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+      if ('IntersectionObserver' in window && sections.length) {
+        const io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id); });
+            }
+          });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+        sections.forEach(function (sec) { io.observe(sec); });
+      }
     })();
   </script>
 </body>
