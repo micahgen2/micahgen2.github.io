@@ -2843,7 +2843,7 @@
     // STATUS_ENDPOINT: public HTTPS URL of the uptime endpoint (no trailing
     // slash, no /uptime path), e.g. "https://uptime.yourdomain.net".
     // Leave it "" (disabled) until the endpoint is running on Micah's PC and
-    // exposed over HTTPS (Cloudflare Tunnel or Caddy — see the endpoint
+    // exposed over HTTPS (Tailscale Funnel, Cloudflare Tunnel or Caddy —
     // README in workspace/your_files/uptime-endpoint/). When disabled or
     // unreachable, the site silently shows the static homelab list with no
     // live data. No fake status is ever shown. The number is the PC's
@@ -2851,7 +2851,7 @@
     // To add a status source later (e.g. Uptime Kuma), point STATUS_ENDPOINT
     // at any service that answers GET /uptime with the same JSON shape.
     // =========================================================================
-    const STATUS_ENDPOINT = '';
+    const STATUS_ENDPOINT = 'https://desktop-7kb5q81.tail23e5cd.ts.net';
 
     // --- PURE STATUS LOGIC (no DOM access; unit-tested in Node) ---
     function renderLiveStatus(data) {
