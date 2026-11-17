@@ -2300,6 +2300,51 @@
     // DYNAMIC YEAR
     // =========================================================================
     document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // =========================================================================
+    // LIVE GITHUB STATS — stars & updated dates, refreshed on every visit
+    // Public API, no token needed. The static values in the HTML stay as the
+    // fallback: if this fetch fails, rate-limits, or the visitor is offline,
+    // nothing on the page changes.
+    // =========================================================================
+    (function refreshGitHubStats() {
+      fetch('https://api.github.com/users/micahgen2/repos?per_page=100')
+        .then(function (res) {
+          if (!res.ok) throw new Error('GitHub API ' + res.status);
+          return res.json();
+        })
+        .then(function (repos) {
+          if (!Array.isArray(repos)) return;
+
+          var byName = {};
+          repos.forEach(function (r) { byName[r.name] = r; });
+
+          document.querySelectorAll('.repo-meta').forEach(function (meta) {
+            var card = meta.closest('article.project-card');
+            if (!card) return;
+            var title = card.querySelector('.project-title');
+            if (!title) return;
+            var repo = byName[title.textContent.trim()];
+            if (!repo) return;
+            var formatted = new Date(repo.updated_at).toLocaleDateString('en-US', {
+              month: 'short', day: 'numeric', year: 'numeric'
+            });
+            meta.textContent = 'Updated ' + formatted + ' \u00b7 \u2605 ' + repo.stargazers_count;
+          });
+
+          // Count only his own repos, not forks (matches the static "14").
+          var ownRepos = repos.filter(function (r) { return !r.fork; }).length;
+          document.querySelectorAll('.hero-stats span').forEach(function (span) {
+            if (span.textContent.indexOf('public repos') !== -1) {
+              var strong = span.querySelector('strong');
+              if (strong) strong.textContent = ownRepos;
+            }
+          });
+        })
+        .catch(function (err) {
+          console.warn('Live GitHub stats unavailable, keeping static values.', err);
+        });
+    })();
   </script>
 </body>
 </html>
