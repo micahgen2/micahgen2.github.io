@@ -376,7 +376,7 @@
        HERO SECTION
        ========================================================================== */
     .hero {
-      padding: 2.5rem 0 3.5rem;
+      padding: 2.5rem 0 2.5rem;
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
       gap: 2.5rem;
@@ -424,6 +424,21 @@
       align-items: center;
       gap: 0.85rem;
       margin-top: 0.5rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      margin-top: 0.9rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .hero-stats strong {
+      color: var(--text-main);
+      font-weight: 600;
     }
 
     .btn {
@@ -645,6 +660,7 @@
       display: grid;
       grid-template-columns: 1.4fr 1fr;
       gap: 1.5rem;
+      align-items: start;
     }
 
     .card {
@@ -719,6 +735,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.25rem;
+      align-items: start;
     }
 
     .stack-category {
@@ -772,6 +789,10 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
       gap: 1.25rem;
+    }
+
+    .project-grid--two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .project-card {
@@ -881,6 +902,25 @@
       border-radius: 4px;
       background: rgba(255, 255, 255, 0.03);
       color: var(--text-muted);
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-links a {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .project-links .muted-note {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-dim);
     }
 
     /* ==========================================================================
@@ -1271,6 +1311,13 @@
       outline-offset: 2px;
     }
 
+    .repo-meta {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+
     .repo-link {
       display: inline-flex;
       align-items: center;
@@ -1394,6 +1441,12 @@
                 <line x1="6" y1="18" x2="6.01" y2="18"></line>
               </svg>
             </a>
+          </div>
+
+          <div class="hero-stats">
+            <span><strong>14</strong> public repos</span>
+            <span><strong>48TB</strong> ZFS homelab</span>
+            <span><strong>C# · Python · Lua</strong></span>
           </div>
         </div>
 
@@ -1540,7 +1593,7 @@
           <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">featured_repos</span>
         </div>
 
-        <div class="project-grid">
+        <div class="project-grid project-grid--two">
           <!-- Project 1: Game Dev -->
           <article class="project-card">
             <div>
@@ -1558,11 +1611,16 @@
                 <li>Dynamic level tools and state management</li>
               </ul>
             </div>
-            <div class="project-tags">
-              <span class="project-tag">Unity</span>
-              <span class="project-tag">C#</span>
-              <span class="project-tag">Lua</span>
-              <span class="project-tag">Game Logic</span>
+            <div>
+              <div class="project-links">
+                <span class="muted-note">Unity experiments in private repos for now</span>
+              </div>
+              <div class="project-tags">
+                <span class="project-tag">Unity</span>
+                <span class="project-tag">C#</span>
+                <span class="project-tag">Lua</span>
+                <span class="project-tag">Game Logic</span>
+              </div>
             </div>
           </article>
 
@@ -1583,11 +1641,16 @@
                 <li>Encrypted mesh networking via WireGuard</li>
               </ul>
             </div>
-            <div class="project-tags">
-              <span class="project-tag">Arch Linux</span>
-              <span class="project-tag">Docker</span>
-              <span class="project-tag">ZFS</span>
-              <span class="project-tag">Self-Hosted</span>
+            <div>
+              <div class="project-links">
+                <a href="#homelab">See the homelab setup &rarr;</a>
+              </div>
+              <div class="project-tags">
+                <span class="project-tag">Arch Linux</span>
+                <span class="project-tag">Docker</span>
+                <span class="project-tag">ZFS</span>
+                <span class="project-tag">Self-Hosted</span>
+              </div>
             </div>
           </article>
 
@@ -1600,19 +1663,25 @@
               </div>
               <h3 class="project-title">Automation & System Utilities</h3>
               <p class="project-desc">
-                Command-line suites for real-time weather monitoring, automated server backup validation, boot maintenance hooks, and desktop integrations.
+                Command-line tools for the unglamorous jobs — network diagnostics that name the layer at fault, and safe USB image flashing for Linux.
               </p>
               <ul class="project-features">
-                <li>Desktop weather alert daemons with zero overhead</li>
-                <li>Custom Arch Linux maintenance and backup triggers</li>
-                <li>Lightweight system notification pipelines</li>
+                <li>wtfnet: runs the checks you'd run by hand when the internet breaks</li>
+                <li>usb-flasher: .iso, .img, .xz, .gz, .bz2, .zip and .zst support</li>
+                <li>Both open source on GitHub</li>
               </ul>
             </div>
-            <div class="project-tags">
-              <span class="project-tag">Python</span>
-              <span class="project-tag">Bash</span>
-              <span class="project-tag">Systemd</span>
-              <span class="project-tag">CLI</span>
+            <div>
+              <div class="project-links">
+                <a href="https://github.com/micahgen2/wtfnet" target="_blank" rel="noopener noreferrer">wtfnet &rarr;</a>
+                <a href="https://github.com/micahgen2/usb-flasher" target="_blank" rel="noopener noreferrer">usb-flasher &rarr;</a>
+              </div>
+              <div class="project-tags">
+                <span class="project-tag">Python</span>
+                <span class="project-tag">Bash</span>
+                <span class="project-tag">Systemd</span>
+                <span class="project-tag">CLI</span>
+              </div>
             </div>
           </article>
 
@@ -1633,11 +1702,17 @@
                 <li>Automated deployment scripts for fresh machines</li>
               </ul>
             </div>
-            <div class="project-tags">
-              <span class="project-tag">Arch Linux</span>
-              <span class="project-tag">Zsh</span>
-              <span class="project-tag">Dotfiles</span>
-              <span class="project-tag">Neovim</span>
+            <div>
+              <div class="project-links">
+                <a href="https://github.com/micahgen2/pacgui" target="_blank" rel="noopener noreferrer">pacgui — Arch package manager &rarr;</a>
+                <span class="muted-note">Dotfiles not public yet</span>
+              </div>
+              <div class="project-tags">
+                <span class="project-tag">Arch Linux</span>
+                <span class="project-tag">Zsh</span>
+                <span class="project-tag">Dotfiles</span>
+                <span class="project-tag">Neovim</span>
+              </div>
             </div>
           </article>
         </div>
@@ -1663,6 +1738,7 @@
               <p class="project-desc">
                 Windows Terminal Emulator with Linux command emulation written in C# (.NET 10).
               </p>
+              <div class="repo-meta">Updated Sep 5, 2026 · ★ 0</div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/WinLinuxTerm" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1684,6 +1760,7 @@
               <p class="project-desc">
                 Modern GTK4 / Libadwaita graphical package manager for Arch Linux &amp; ALPM distributions.
               </p>
+              <div class="repo-meta">Updated Aug 28, 2026 · ★ 0</div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/pacgui" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1705,6 +1782,7 @@
               <p class="project-desc">
                 Modern, high-performance system monitor written in C# with an Avalonia desktop GUI, Spectre.Console TUI, and embedded web dashboard.
               </p>
+              <div class="repo-meta">Updated Aug 13, 2026 · ★ 0</div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/SysMonCSharp" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1726,6 +1804,7 @@
               <p class="project-desc">
                 High-performance, safe USB disk image flasher for Linux supporting .iso, .img, .xz, .gz, .bz2, .zip, and .zst.
               </p>
+              <div class="repo-meta">Updated Aug 22, 2026 · ★ 0</div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/usb-flasher" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1747,6 +1826,7 @@
               <p class="project-desc">
                 A custom Discord client, built from scratch.
               </p>
+              <div class="repo-meta">Updated Aug 30, 2026 · ★ 0</div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/aethercord" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1768,6 +1848,7 @@
               <p class="project-desc">
                 A network diagnostic battery with an attitude problem. Runs the checks you would run by hand when the internet is broken, shows the exact command and raw output, and names the layer most likely at fault.
               </p>
+              <div class="repo-meta">Updated Oct 24, 2026 · ★ 0</div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/wtfnet" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1789,6 +1870,7 @@
               <p class="project-desc">
                 A custom, distraction-free, privacy-friendly YouTube desktop client. Ad-free via Invidious and Piped proxies, with a Zen Mode that hides recommendations, sidebars, and comments.
               </p>
+              <div class="repo-meta">Updated Sep 6, 2026 · ★ 0</div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/zentube-desktop" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1810,6 +1892,7 @@
               <p class="project-desc">
                 A modern, dark-themed custom Spotify client with direct in-browser playback via the official Spotify Web Playback SDK and zero-backend PKCE auth.
               </p>
+              <div class="repo-meta">Updated Sep 2, 2026 · ★ 0</div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/aether-spotify" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1831,6 +1914,7 @@
               <p class="project-desc">
                 Windows desktop system monitor written in C#. Live CPU, memory, disk, and network cards with sparklines, plus a process list, in a dark WinForms UI.
               </p>
+              <div class="repo-meta">Updated Aug 29, 2026 · ★ 0</div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/SysMon" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1852,6 +1936,7 @@
               <p class="project-desc">
                 iOS app that finds historical App Store builds, downloads authentic .ipa files directly from Apple CDN servers, and installs them on-device with no computer needed.
               </p>
+              <div class="repo-meta">Updated Aug 18, 2026 · ★ 0</div>
             </div>
             <div>
               <a class="repo-link" href="https://github.com/micahgen2/LegacyAppInstaller" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
@@ -1859,6 +1944,28 @@
                 <span class="project-tag">Swift</span>
                 <span class="project-tag">iOS</span>
                 <span class="project-tag">IPA</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div>
+              <div class="project-header">
+                <span class="project-badge utility">Swift</span>
+                <span style="font-size: 1.2rem;">&#128421;</span>
+              </div>
+              <h3 class="project-title mono">vmforge</h3>
+              <p class="project-desc">
+                Download OS images and run them as VMs on your Mac. ARM64 guests run at near-native speed, x86_64 guests via QEMU.
+              </p>
+              <div class="repo-meta">Updated Nov 8, 2026 · ★ 0</div>
+            </div>
+            <div>
+              <a class="repo-link" href="https://github.com/micahgen2/vmforge" target="_blank" rel="noopener noreferrer">View on GitHub &rarr;</a>
+              <div class="project-tags">
+                <span class="project-tag">Swift</span>
+                <span class="project-tag">macOS</span>
+                <span class="project-tag">Virtualization</span>
               </div>
             </div>
           </article>
@@ -1891,7 +1998,7 @@
           <h2 class="section-title">
             <span class="section-tag">// 05</span> Homelab Topology
           </h2>
-          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">status: 99.9% uptime</span>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">status: self-hosted</span>
         </div>
 
         <div class="homelab-banner">
@@ -1958,7 +2065,7 @@
               <span>🥖 Sourdough Bread</span>
             </div>
             <p>
-              Criminally underrated. Fermentation, wild yeast, and a crackling crust is peak kitchen engineering.
+              Criminally underrated. Fermentation, wild yeast, and a crackling crust are peak kitchen engineering.
             </p>
           </div>
 
@@ -2005,10 +2112,10 @@
           </p>
 
           <div class="connect-actions">
-            <button class="copy-chip" onclick="copyContact('email', 'micah@patrick-gentry.net')">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <a href="mailto:micah@patrick-gentry.net" class="copy-chip">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><path d="M22 6l-10 7L2 6"></path></svg>
               <span>Email: micah@patrick-gentry.net</span>
-            </button>
+            </a>
 
             <button class="copy-chip" onclick="copyContact('discord', 'micahgen2')">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6h-5m0 0H8a4 4 0 0 0-4 4v4a4 4 0 0 0 4 4h5m0 0h5a4 4 0 0 0 4-4v-4a4 4 0 0 0-4-4z"></path></svg>
@@ -2027,7 +2134,7 @@
     <!-- Footer -->
     <footer>
       <p>&copy; <span id="current-year">2026</span> Micah Gentry. All rights reserved.</p>
-      <p>Last updated October 2026.</p>
+      <p>Last updated November 2026.</p>
       <div class="footer-badge">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
         <span>Zero tracking • High performance • Self-contained</span>
@@ -2049,15 +2156,13 @@
     const terminalData = {
       neofetch: `
         <div style="display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap;">
-          <div style="color: var(--accent); font-weight: bold; line-height: 1.2; font-family: monospace;">
-  /\\<br>
- /  \\<br>
-/\\   \\<br>
-/      \\<br>
-/   ,,   \\<br>
-/   |  |  \\<br>
-/_-'' ''-_\\
-          </div>
+          <div style="color: var(--accent); font-weight: bold; line-height: 1.2; font-family: monospace; white-space: pre;">      /\\
+     /  \\
+    /    \\
+   /      \\
+  /   ,,   \\
+ /   |  |   \\
+/_-''    ''-\\</div>
           <div style="flex: 1; min-width: 200px;">
             <div class="term-row"><span class="term-key">micah@homelab</span></div>
             <div style="border-bottom: 1px dashed var(--border-subtle); margin-bottom: 0.4rem;"></div>
@@ -2068,11 +2173,13 @@
             <div class="term-row"><span class="term-key">Shell:</span> <span class="term-val">zsh 5.9</span></div>
             <div class="term-row"><span class="term-key">WM / DE:</span> <span class="term-val">Tiling WM + Wayland</span></div>
             <div class="term-row"><span class="term-key">Memory:</span> <span class="term-val">32GiB ECC DDR4</span></div>
-            <div class="term-row"><span class="term-key">Storage:</span> <span class="term-val">48TB ZFS Pool (Encrypted)</span></div>
+            <div class="term-row"><span class="term-key">Storage:</span> <span class="term-val">48TB ZFS Pool</span></div>
           </div>
         </div>
+        <div class="term-row"><span style="color: #34d399;">micah@homelab:~$</span> <span class="term-val">echo "Ready to build"</span></div>
+        <div class="term-row"><span class="term-val">Ready to build</span></div>
         <div class="term-prompt">
-          <span>micah@homelab:~$</span> <span class="term-val">echo "Ready for the next build"</span> <span class="term-cursor"></span>
+          <span>micah@homelab:~$</span> <span class="term-cursor"></span>
         </div>
       `,
       whoami: `
@@ -2085,7 +2192,7 @@
         <div class="term-row"><span class="term-key">Status:</span> <span class="term-val">Exploring new systems & compiling code</span></div>
         <div class="term-row"><span class="term-key">Location:</span> <span class="term-val">United States (Local time active)</span></div>
         <div class="term-prompt">
-          <span>micah@homelab:~$</span> <span class="term-val">cat /etc/motd</span> <span class="term-cursor"></span>
+          <span>micah@homelab:~$</span> <span class="term-cursor"></span>
         </div>
       `,
       services: `
@@ -2098,7 +2205,7 @@
         <div class="term-row"><span class="term-key">zfs-scrub:</span> <span class="term-val" style="color: #34d399;">● Periodic (Healthy 0 errors)</span></div>
         <div class="term-row"><span class="term-key">metrics:</span> <span class="term-val" style="color: #34d399;">● UP (node_exporter)</span></div>
         <div class="term-prompt">
-          <span>micah@homelab:~$</span> <span class="term-val">systemctl is-system-running</span> <span class="term-cursor"></span>
+          <span>micah@homelab:~$</span> <span class="term-cursor"></span>
         </div>
       `,
       hobbies: `
@@ -2107,11 +2214,11 @@
         </div>
         <div class="term-row"><span class="term-key">Gamedev:</span> <span class="term-val">Unity, C#, Lua physics sandboxes</span></div>
         <div class="term-row"><span class="term-key">Hardware:</span> <span class="term-val">Custom PC builds, NAS optimization</span></div>
-        <div class="term-row"><span class="term-key">Baking:</span> <span class="term-val">Artisan Sourdough (10/10 rating)</span></div>
+        <div class="term-row"><span class="term-key">Baking:</span> <span class="term-val">Artisan Sourdough</span></div>
         <div class="term-row"><span class="term-key">Animals:</span> <span class="term-val">1 dog, multiple cats</span></div>
         <div class="term-row"><span class="term-key">Weather:</span> <span class="term-val">Rainstorms & thunder</span></div>
         <div class="term-prompt">
-          <span>micah@homelab:~$</span> <span class="term-val">uptime</span> <span class="term-cursor"></span>
+          <span>micah@homelab:~$</span> <span class="term-cursor"></span>
         </div>
       `
     };
