@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Not Found | Micah Gentry</title>
+  <meta name="description" content="This page doesn't exist on micahgen2.github.io." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #080b12; color: #f1f5f9; font-family: "JetBrains Mono", Consolas, Monaco, monospace; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; line-height: 1.7; }
+    .term { max-width: 560px; width: 100%; background: #090d16; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 14px; padding: 2rem; box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5); }
+    .big { font-size: clamp(3rem, 12vw, 4.5rem); font-weight: 700; color: #38bdf8; line-height: 1.1; }
+    .dim { color: #94a3b8; }
+    .accent { color: #38bdf8; }
+    .prompt { color: #34d399; }
+    p { margin: 0.75rem 0; font-size: 0.95rem; }
+    a { color: #38bdf8; text-decoration: none; font-weight: 600; }
+    a:hover { color: #fff; text-decoration: underline; }
+    .home { display: inline-block; margin-top: 1.25rem; padding: 0.6rem 1.2rem; border: 1px solid #38bdf8; border-radius: 8px; }
+    .home:hover { background: rgba(56, 189, 248, 0.12); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="term">
+    <div class="big">404</div>
+    <p><span class="prompt">micah@homelab:~$</span> <span class="accent">cd</span> <span id="missing-path"></span></p>
+    <p class="dim">bash: cd: <span id="missing-path-2"></span>: No such file or directory</p>
+    <p>This page doesn't exist. It may have been moved, renamed, or never existed in the first place — like a clean Arch install, it is not coming back.</p>
+    <p><a class="home" href="/">← cd ~ (back home)</a></p>
+  </main>
+  <script>
+    var path = window.location.pathname || '/unknown';
+    document.getElementById('missing-path').textContent = path;
+    document.getElementById('missing-path-2').textContent = path;
+  </script>
+</body>
+</html>
