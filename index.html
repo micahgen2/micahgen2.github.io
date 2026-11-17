@@ -619,6 +619,8 @@
        ========================================================================== */
     section {
       margin-bottom: 4rem;
+      /* Offset anchor jumps so section headings land below the sticky pill nav */
+      scroll-margin-top: 6rem;
     }
 
     .section-header {
@@ -1320,9 +1322,9 @@
     .tree-backdrop[hidden] { display: none; }
     @media (min-width: 1320px) {
       body { padding-left: 232px; }
-      .file-tree { display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; width: 232px; z-index: 60; background: #0a0e19; border-right: 1px solid var(--border-subtle); padding: 1.25rem 0.9rem; font-family: var(--font-mono); font-size: 0.84rem; overflow-y: auto; }
+      .file-tree { display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; width: 232px; z-index: 60; background: #0a0e19; border-right: 1px solid var(--border-subtle); padding: 1.25rem 0.9rem; font-family: var(--font-mono); font-size: 0.84rem; overflow-y: auto; overflow-x: hidden; }
     }
-    .tree-title { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--text-dim); text-transform: uppercase; margin: 0.25rem 0.5rem 0.75rem; white-space: nowrap; }
+    .tree-title { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--text-dim); text-transform: uppercase; margin: 0.25rem 0.5rem 0.75rem; }
     .tree-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
     .tree-list a { display: flex; align-items: center; gap: 0.55rem; padding: 0.45rem 0.6rem; border-radius: 6px; color: var(--text-muted); font-size: 0.85rem; }
     .tree-list a:hover { background: rgba(255, 255, 255, 0.05); color: var(--text-bright); }
@@ -1431,7 +1433,7 @@
       .nav-links { display: none; }
       .hamburger { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-subtle); color: var(--text-main); font-size: 1.05rem; cursor: pointer; }
       .hamburger:hover { color: var(--accent); border-color: var(--border-accent); }
-      .file-tree { display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; width: 272px; z-index: 120; background: #0a0e19; border-right: 1px solid var(--border-medium); padding: 1.25rem 0.9rem; font-family: var(--font-mono); font-size: 0.84rem; overflow-y: auto; transform: translateX(-105%); transition: transform 0.3s ease; box-shadow: 12px 0 36px rgba(0, 0, 0, 0.5); }
+      .file-tree { display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; width: 272px; z-index: 120; background: #0a0e19; border-right: 1px solid var(--border-medium); padding: 1.25rem 0.9rem; font-family: var(--font-mono); font-size: 0.84rem; overflow-y: auto; overflow-x: hidden; transform: translateX(-105%); transition: transform 0.3s ease; box-shadow: 12px 0 36px rgba(0, 0, 0, 0.5); }
       .file-tree.open { transform: translateX(0); }
       .tree-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 110; }
     }
@@ -1447,7 +1449,7 @@
 
   <!-- IDE-style file tree (desktop sidebar / mobile slide-over) -->
   <aside class="file-tree" id="file-tree" aria-label="Site file tree">
-    <div class="tree-title">Explorer — micahgen2.github.io</div>
+    <div class="tree-title">Explorer</div>
     <ul class="tree-list">
       <li><a href="#about"><span class="tree-icon">📄</span>about.md</a></li>
       <li><a href="#toolbox"><span class="tree-icon">📄</span>skills.json</a></li>
@@ -1942,9 +1944,9 @@
           <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">public_repos</span>
         </div>
 
-        <!-- Contribution graph (third-party image; hides itself if it fails to load) -->
+        <!-- Contribution graph (third-party image; ghchart.rcti.io is down, so this uses the github-readme-activity-graph service instead. If the image fails, only the image hides — the caption stays.) -->
         <figure class="contrib-card">
-          <img src="https://ghchart.rcti.io/micahgen2" alt="Micah's GitHub contribution graph" loading="lazy" onerror="this.closest('.contrib-card').style.display='none'" />
+          <img src="https://github-readme-activity-graph.vercel.app/graph?username=micahgen2&theme=github-dark&hide_border=true" alt="Micah's GitHub contribution graph" loading="lazy" onerror="this.style.display='none'" />
           <figcaption>contributions on GitHub — <a href="https://github.com/micahgen2" target="_blank" rel="noopener noreferrer">github.com/micahgen2</a></figcaption>
         </figure>
 
@@ -2346,7 +2348,8 @@
           </h2>
           <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">build.log</span>
         </div>
-        <p class="section-note">$ tail -f build.log &nbsp;— short factual log. Edit these entries in index.html to add more.</p>
+        <!-- To add more entries, edit the buildlog-entry articles below in index.html. -->
+        <p class="section-note">$ tail -f build.log &nbsp;— short factual log.</p>
         <div class="buildlog-list">
           <article class="buildlog-entry">
             <h3>Kernel patches accepted upstream <span class="buildlog-status">merged</span></h3>
@@ -2668,6 +2671,9 @@
       termBody.innerHTML = '';
       const out = termResponse(tabName);
       if (out) termPrint(out);
+      // termPrint() scrolls to the bottom (right for typed output); a fresh
+      // tab should start at the top so the first line is fully visible.
+      termBody.scrollTop = 0;
       if (termInput) termInput.focus({ preventScroll: true });
     }
 
