@@ -1377,6 +1377,9 @@
     /* Homelab rack */
     .status-panel { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: 1.25rem; padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.07); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.82rem; }
     .status-panel[hidden] { display: none; }
+    .status-panel.offline { background: rgba(248, 113, 113, 0.07); border-color: rgba(248, 113, 113, 0.3); }
+    .status-panel.offline .status-pill { background: rgba(248, 113, 113, 0.1); border-color: rgba(248, 113, 113, 0.3); color: #f87171; }
+    .status-panel.offline .status-dot { background-color: #f87171; box-shadow: 0 0 8px #f87171; animation: none; }
     .status-note { color: var(--text-dim); font-size: 0.78rem; }
     .rack-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.25rem; align-items: start; }
     .rack { background: #070a12; border: 1px solid var(--border-medium); border-radius: var(--radius-md); padding: 0.75rem; display: flex; flex-direction: column; gap: 0.6rem; }
@@ -2292,7 +2295,8 @@
           </div>
 
           <!-- Live status panel: hidden until STATUS_ENDPOINT (bottom of page) is set
-               to a public HTTPS URL and the fetch succeeds. No fake status is ever shown. -->
+               to a public HTTPS URL. A successful fetch shows the live uptime; a
+               failed fetch shows "pc offline" instead. No fake status is ever shown. -->
           <div class="status-panel" id="status-panel" hidden>
             <span class="status-pill"><span class="status-dot"></span><span id="live-uptime-text">fetching live status…</span></span>
             <span class="status-note" id="live-host-text"></span>
@@ -2866,20 +2870,52 @@
       }) : [];
       return { label: label, sub: sub, services: services };
     }
+    function renderOfflineStatus(lastSeen) {
+      // lastSeen: {at: ms epoch, uptime: string} | null — from localStorage.
+      const label = 'pc offline';
+      let sub = 'endpoint unreachable — pc is off, asleep, or the tunnel is down';
+      if (lastSeen && typeof lastSeen.at === 'number') {
+        const d = new Date(lastSeen.at);
+        if (!isNaN(d.getTime())) {
+          sub = 'last seen ' + d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + (lastSeen.uptime ? ' · was ' + String(lastSeen.uptime) : '');
+        }
+      }
+      return { label: label, sub: sub };
+    }
     // --- END PURE STATUS LOGIC ---
 
     (function fetchLiveStatus() {
       if (!STATUS_ENDPOINT) return;
       const base = STATUS_ENDPOINT.endsWith('/') ? STATUS_ENDPOINT.slice(0, -1) : STATUS_ENDPOINT;
-      fetch(base + '/uptime')
+      const panel = document.getElementById('status-panel');
+      const uptimeText = document.getElementById('live-uptime-text');
+      const hostText = document.getElementById('live-host-text');
+      function showOffline() {
+        let lastSeen = null;
+        try { lastSeen = JSON.parse(window.localStorage.getItem('liveStatusLastSeen') || 'null'); } catch (e) { lastSeen = null; }
+        const off = renderOfflineStatus(lastSeen);
+        if (!panel || !uptimeText) return;
+        uptimeText.textContent = off.label;
+        if (hostText) hostText.textContent = off.sub;
+        panel.classList.add('offline');
+        panel.hidden = false;
+      }
+      function storeLastSeen(data) {
+        try {
+          window.localStorage.setItem('liveStatusLastSeen', JSON.stringify({ at: Date.now(), uptime: data.uptime || null }));
+        } catch (e) { /* storage unavailable (private mode) — offline note just won't have a last-seen time */ }
+      }
+      let timeoutId = null;
+      const controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      if (controller) timeoutId = setTimeout(function () { controller.abort(); }, 5000);
+      fetch(base + '/uptime', controller ? { signal: controller.signal } : undefined)
         .then(function (res) { if (!res.ok) throw new Error('status ' + res.status); return res.json(); })
         .then(function (data) {
-          if (!data || data.status !== 'ok') return;
+          if (timeoutId) clearTimeout(timeoutId);
+          if (!data || data.status !== 'ok') { showOffline(); return; }
           const live = renderLiveStatus(data);
-          if (!live.label) return;
-          const panel = document.getElementById('status-panel');
-          const uptimeText = document.getElementById('live-uptime-text');
-          const hostText = document.getElementById('live-host-text');
+          if (!live.label) { showOffline(); return; }
+          storeLastSeen(data);
           if (!panel || !uptimeText) return;
           uptimeText.textContent = live.label;
           if (hostText) hostText.textContent = live.sub;
@@ -2895,7 +2931,7 @@
             });
           });
         })
-        .catch(function (err) { console.warn('Live status unavailable, keeping static homelab list.', err); });
+        .catch(function (err) { if (timeoutId) clearTimeout(timeoutId); console.warn('Live status unavailable, showing offline state.', err); showOffline(); });
     })();
 
     // =========================================================================
